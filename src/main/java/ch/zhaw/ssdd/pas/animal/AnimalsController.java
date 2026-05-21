@@ -1,4 +1,4 @@
-package ch.zhaw.ssdd.pas.book;
+package ch.zhaw.ssdd.pas.animal;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -6,16 +6,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class BooksController {
+public class AnimalsController {
 
-    private final BookRepository repo;
+    private final AnimalRepository repo;
 
-    public BooksController(BookRepository repo) {
+    public AnimalsController(AnimalRepository repo) {
         this.repo = repo;
     }
 
-    @GetMapping("/books")
-    public List<Book> listAll() {
+    @GetMapping("/animals")
+    public List<Animal> listAll() {
         return repo.findAll();
     }
 }

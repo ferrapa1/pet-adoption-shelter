@@ -1,17 +1,17 @@
-INSERT INTO BOOK (ID, TITLE)
-VALUES (1, 'Moby-Dick (PG)');
+INSERT INTO ANIMAL (ID, NAME, RACE, AGE)
+VALUES (1, 'Fido (PG)', 'Golden Retriever', 3);
 
-INSERT INTO BOOK (ID, TITLE)
-VALUES (2, 'The Great Gatsby (PG)');
+INSERT INTO ANIMAL (ID, NAME, RACE, AGE)
+VALUES (2, 'Whiskers (PG)', 'Siamese', 5);
 
-INSERT INTO BOOK (ID, TITLE)
-VALUES (3, 'Pride and Prejudice (PG)');
+INSERT INTO ANIMAL (ID, NAME, RACE, AGE)
+VALUES (3, 'Rocky (PG)', 'German Shepherd', 2);
 
-INSERT INTO BOOK (ID, TITLE)
-VALUES (4, 'Frankenstein (PG)');
+INSERT INTO ANIMAL (ID, NAME, RACE, AGE)
+VALUES (4, 'Luna (PG)', 'Tabby', 1);
 
-INSERT INTO BOOK (ID, TITLE)
-VALUES (5, 'Robinson Crusoe (PG)');
+INSERT INTO ANIMAL (ID, NAME, RACE, AGE)
+VALUES (5, 'Max (PG)', 'Labrador', 4);
 
-INSERT INTO BOOK (ID, TITLE)
-VALUES (6, 'The Call of the Wild (PG)');
+INSERT INTO ANIMAL (ID, NAME, RACE, AGE)
+VALUES (6, 'Bella (PG)', 'Beagle', 6);
