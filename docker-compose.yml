@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:16
+    container_name: pas-db
+    environment:
+      POSTGRES_DB: pas
+      POSTGRES_USER: pas
+      POSTGRES_PASSWORD: pas
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pas"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: debug
+    image: pas-app:debug
+    container_name: pas-app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
