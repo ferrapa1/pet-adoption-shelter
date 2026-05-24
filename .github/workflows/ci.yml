@@ -38,7 +38,7 @@ jobs:
            github.event.pull_request.head.repo.full_name == github.repository)
         with:
           name: JUnit Tests
-          path: target/surefire-reports/*.xml
+          path: backend/target/surefire-reports/*.xml
           reporter: java-junit
 
   deploy:
