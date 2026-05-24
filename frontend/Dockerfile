@@ -18,9 +18,11 @@ RUN npm run build --configuration=production
 FROM nginx:alpine AS prod
 
 # Copy the built Angular app from the build stage to Nginx's default public directory
-# Note: In Angular 17+, the build output is placed in dist/<project-name>/browser
-# Adjust 'pet-adoption-ui' if your angular.json project name is different
+# When SSR is disabled and outputMode is removed, the build output is placed directly in dist/<project-name>/browser
 COPY --from=build /app/dist/pet-adoption-ui/browser /usr/share/nginx/html
+
+# Copy the custom nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80
 EXPOSE 80
