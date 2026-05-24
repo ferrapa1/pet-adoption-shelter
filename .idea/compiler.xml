@@ -7,11 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="pet-adoption-shelter" />
+        <module name="pas-backend" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="pas-backend" options="-parameters" />
       <module name="pet-adoption-shelter" options="-parameters" />
     </option>
   </component>
