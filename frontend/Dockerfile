@@ -17,12 +17,12 @@ RUN npm run build --configuration=production
 # =========================
 FROM nginx:alpine AS prod
 
-# Copy the built Angular app from the build stage to Nginx's default public directory
-# When SSR is disabled and outputMode is removed, the build output is placed directly in dist/<project-name>/browser
+# Copy the built Angular app from the build stage
 COPY --from=build /app/dist/pet-adoption-ui/browser /usr/share/nginx/html
 
-# Copy the custom nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy the Nginx configuration template.
+# This will be processed by the entrypoint script to substitute environment variables.
+COPY default.conf.template /etc/nginx/templates/default.conf.template
 
 # Expose port 80
 EXPOSE 80

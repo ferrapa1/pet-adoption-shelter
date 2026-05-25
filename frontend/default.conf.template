@@ -10,7 +10,13 @@ server {
 
   # Reverse proxy for API calls
   location /api {
-    proxy_pass http://backend:8080;
+    # Use Docker's internal DNS resolver
+    resolver 127.0.0.11 valid=30s;
+
+    # This value will be substituted by the NGINX_PROXY_PASS environment variable
+    proxy_pass ${NGINX_PROXY_PASS};
+
+    # Headers for proxying
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

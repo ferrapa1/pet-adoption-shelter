@@ -39,3 +39,5 @@ services:
       - backend
     ports:
       - "80:80"
+    environment:
+      - NGINX_PROXY_PASS=http://backend:8080
