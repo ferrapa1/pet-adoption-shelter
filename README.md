@@ -14,3 +14,5 @@ Data Security: Encrypted storage of secret user data, including passwords and ba
 Media & Input: File upload capabilities for identity verification and pet photos, alongside a public blog for community comments.
 
 Search: Input-dependent database queries for dynamic pet filtering.
+
+Render "Hello World" link: https://pet-adoption-shelter.onrender.com/api/greeting
