@@ -16,8 +16,10 @@ server {
     # This value will be substituted by the NGINX_PROXY_PASS environment variable
     proxy_pass ${NGINX_PROXY_PASS};
 
-    # Headers for proxying
-    proxy_set_header Host $host;
+    # Set the Host header to the backend's host, not the original request's host
+    proxy_set_header Host $proxy_host;
+
+    # These headers help the backend know about the original request
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
