@@ -1,12 +1,13 @@
 package ch.zhaw.ssdd.pas.adapters.outbound.jpa;
 
-import ch.zhaw.ssdd.pas.domain.AdoptionRequestStatus;
+import ch.zhaw.ssdd.pas.domain.adoption.model.AdoptionRequestStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Table(name = "ADOPTION_REQUEST")
 public class AdoptionRequestEntity {
 
     @Id

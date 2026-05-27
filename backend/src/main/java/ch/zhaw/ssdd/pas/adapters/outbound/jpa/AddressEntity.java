@@ -1,24 +1,27 @@
 package ch.zhaw.ssdd.pas.adapters.outbound.jpa;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.util.UUID;
 
 @Entity
+@Table(name = "ADDRESS")
 public class AddressEntity {
 
     @Id
     private UUID id;
+    @Column(nullable = false, length = 60)
     private String street;
+    @Column(nullable = false, length = 6)
     private String houseNumber;
+    @Column(nullable = false)
     private int plz;
+    @Column(nullable = false)
     private String city;
-
-    protected AddressEntity() {
-    }
-
 
     public UUID getId() {
         return id;

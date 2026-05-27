@@ -1,11 +1,15 @@
 package ch.zhaw.ssdd.pas.domain.service;
 
-import ch.zhaw.ssdd.pas.domain.*;
+import ch.zhaw.ssdd.pas.domain.adoption.AdoptionRequest;
+import ch.zhaw.ssdd.pas.domain.adoption.model.AdoptionRequestId;
+import ch.zhaw.ssdd.pas.domain.pet.model.PetAdoptionStatus;
+import ch.zhaw.ssdd.pas.domain.pet.Pet;
+import ch.zhaw.ssdd.pas.domain.pet.model.PetId;
+import ch.zhaw.ssdd.pas.domain.user.model.UserId;
 import ch.zhaw.ssdd.pas.ports.inbound.SubmitAdoptionRequestUseCase;
 import ch.zhaw.ssdd.pas.ports.outbound.AdoptionRequestPersistence;
 import ch.zhaw.ssdd.pas.ports.outbound.PetPersistence;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -25,7 +29,7 @@ public class AdoptionRequestService implements SubmitAdoptionRequestUseCase {
         Pet pet = petPersistence.findById(petId)
                 .orElseThrow(() -> new IllegalArgumentException("Pet with ID " + petId.value() + " not found."));
 
-        if (pet.getAdoptionStatus() != AdoptionStatus.AVAILABLE) {
+        if (pet.getAdoptionStatus() != PetAdoptionStatus.AVAILABLE) {
             throw new IllegalStateException("Pet is not available for adoption.");
         }
 

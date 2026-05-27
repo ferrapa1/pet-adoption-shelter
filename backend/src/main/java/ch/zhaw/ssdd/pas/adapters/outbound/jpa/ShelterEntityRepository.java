@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface AdoptionRequestEntityRepository extends JpaRepository<AdoptionRequestEntity, UUID> {
+public interface ShelterEntityRepository extends JpaRepository<ShelterEntity, UUID> {
 }

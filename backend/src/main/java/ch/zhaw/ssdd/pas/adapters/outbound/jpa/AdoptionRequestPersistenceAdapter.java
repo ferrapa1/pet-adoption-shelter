@@ -1,13 +1,12 @@
 package ch.zhaw.ssdd.pas.adapters.outbound.jpa;
 
-import ch.zhaw.ssdd.pas.domain.AdoptionRequest;
-import ch.zhaw.ssdd.pas.domain.AdoptionRequestId;
-import ch.zhaw.ssdd.pas.domain.PetId;
-import ch.zhaw.ssdd.pas.domain.UserId;
+import ch.zhaw.ssdd.pas.domain.adoption.AdoptionRequest;
+import ch.zhaw.ssdd.pas.domain.adoption.model.AdoptionRequestId;
+import ch.zhaw.ssdd.pas.domain.pet.model.PetId;
+import ch.zhaw.ssdd.pas.domain.user.model.UserId;
 import ch.zhaw.ssdd.pas.ports.outbound.AdoptionRequestPersistence;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

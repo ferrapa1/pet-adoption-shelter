@@ -6,9 +6,9 @@ import java.util.UUID;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "user_type",
+@DiscriminatorColumn(name = "USER_TYPE",
         discriminatorType = DiscriminatorType.STRING)
-public class UserEntity {
+public abstract class UserEntity {
 
     @Id
     private UUID id;
@@ -19,7 +19,9 @@ public class UserEntity {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private AddressEntity address;
 
+    @Column(length = 16)
     private String phoneNumber;
+    @Column(length = 50)
     private String email;
 
     public UUID getId() {
