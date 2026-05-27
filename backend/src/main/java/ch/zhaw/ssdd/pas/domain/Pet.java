@@ -23,4 +23,28 @@ public class Pet {
         this.name = name;
         adoptionStatus = AdoptionStatus.AVAILABLE;
     }
+
+    public PetId getPetId() {
+        return petId;
+    }
+
+    public UserId getShelterId() {
+        return shelterId;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public Breed getBreed() {
+        return breed;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public AdoptionStatus getAdoptionStatus() {
+        return adoptionStatus;
+    }
 }

@@ -53,4 +53,12 @@ public class UserEntity {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
 }

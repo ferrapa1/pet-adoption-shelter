@@ -21,4 +21,30 @@ public class AdoptionRequest {
         this.requestStatus = AdoptionRequestStatus.SUBMITTED;
         this.createdAt = LocalDateTime.now();
     }
+
+
+    // Getters and Setters
+    public AdoptionRequestId getAdoptionRequestId() {
+        return adoptionRequestId;
+    }
+
+    public UserId getAdopterId() {
+        return adopterId;
+    }
+
+    public PetId getPetId() {
+        return petId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public AdoptionRequestStatus getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(AdoptionRequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
+    }
 }
