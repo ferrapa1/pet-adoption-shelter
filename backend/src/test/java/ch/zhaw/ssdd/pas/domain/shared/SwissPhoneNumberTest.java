@@ -30,4 +30,16 @@ class SwissPhoneNumberTest {
         assertThrows(IllegalArgumentException.class, () ->
                 new SwissPhoneNumber("+41 76 123 45 6x"));
     }
+
+    @Test
+    void testNull() {
+        assertThrows(NullPointerException.class, () ->
+                new SwissPhoneNumber(null));
+    }
+
+    @Test
+    void testEmptyString() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new SwissPhoneNumber(""));
+    }
 }

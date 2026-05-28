@@ -44,8 +44,7 @@ public class PetEntity {
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PictureEntity> pictures = new ArrayList<>();
 
-    // JPA requires a no-arg constructor
-    protected PetEntity() {}
+    public PetEntity() {}
 
     // Getters and Setters
     public UUID getId() { return id; }
