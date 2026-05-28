@@ -1,12 +1,12 @@
 package ch.zhaw.ssdd.pas.adapters.outbound.jpa;
 
 import jakarta.persistence.*;
-
 import java.util.UUID;
 
 @Entity
+@Table(name = "app_user")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "USER_TYPE",
+@DiscriminatorColumn(name = "user_type",
         discriminatorType = DiscriminatorType.STRING)
 public abstract class UserEntity {
 
@@ -56,11 +56,11 @@ public abstract class UserEntity {
         this.email = email;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getUserId() {
         return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

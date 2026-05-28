@@ -9,5 +9,8 @@ public record LocalFilePath(String localPath) {
 
     public LocalFilePath {
         Objects.requireNonNull(localPath);
+        if (localPath.isBlank()) {
+            throw new IllegalArgumentException(localPath);
+        }
     }
 }
