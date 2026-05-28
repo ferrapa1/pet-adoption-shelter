@@ -8,12 +8,11 @@ import ch.zhaw.ssdd.pas.stereotypes.ValueObject;
 import java.util.Objects;
 
 @ValueObject
-public record PetPhoto(LocalFilePath localFilePath, UploadTimestamp uploadTimestamp, PetId petId, UserId uploadUserId) {
+public record PetPhoto(LocalFilePath localFilePath, UploadTimestamp uploadTimestamp, PetId petId) {
 
     public PetPhoto {
         Objects.requireNonNull(localFilePath);
         Objects.requireNonNull(uploadTimestamp);
         Objects.requireNonNull(petId);
-        Objects.requireNonNull(uploadUserId);
     }
 }

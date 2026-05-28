@@ -6,6 +6,7 @@ import ch.zhaw.ssdd.pas.domain.pet.Pet;
 import ch.zhaw.ssdd.pas.domain.pet.model.Breed;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetAdoptionStatus;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetId;
+import ch.zhaw.ssdd.pas.domain.pet.model.Species;
 import ch.zhaw.ssdd.pas.domain.user.model.UserId;
 import ch.zhaw.ssdd.pas.ports.outbound.AdoptionRequestPersistence;
 import ch.zhaw.ssdd.pas.ports.outbound.PetPersistence;
@@ -50,6 +51,7 @@ class AdoptionRequestServiceTest {
                 petId,
                 new UserId("shelter-id"),
                 LocalDate.now(),
+                new Species("Dog"),
                 new Breed("Golden Retriever"),
                 "Fido",
                 Collections.emptyList(),
@@ -82,6 +84,7 @@ class AdoptionRequestServiceTest {
                 petId,
                 new UserId("shelter-id"),
                 LocalDate.now(),
+                new Species("Dog"),
                 new Breed("Golden Retriever"),
                 "Fido",
                 Collections.emptyList(),

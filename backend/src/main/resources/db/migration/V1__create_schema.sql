@@ -44,7 +44,8 @@ CREATE TABLE pet_comment (
     timestamp TIMESTAMP NOT NULL,
     parent_id UUID,
     pet_id UUID,
-    FOREIGN KEY (pet_id) REFERENCES pet(id)
+    FOREIGN KEY (pet_id) REFERENCES pet(id),
+    FOREIGN KEY (author_id) REFERENCES app_user(id)
 );
 
 CREATE TABLE adoption_request (
@@ -52,5 +53,7 @@ CREATE TABLE adoption_request (
     adopter_id UUID NOT NULL,
     pet_id UUID NOT NULL,
     created_at TIMESTAMP NOT NULL,
-    request_status VARCHAR(255) NOT NULL
+    request_status VARCHAR(255) NOT NULL,
+    FOREIGN KEY (adopter_id) REFERENCES app_user(id),
+    FOREIGN KEY (pet_id) REFERENCES pet(id)
 );

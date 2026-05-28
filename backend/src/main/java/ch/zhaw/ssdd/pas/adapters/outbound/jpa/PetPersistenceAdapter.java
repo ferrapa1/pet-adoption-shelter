@@ -4,6 +4,7 @@ import ch.zhaw.ssdd.pas.domain.pet.Pet;
 import ch.zhaw.ssdd.pas.domain.pet.model.Comment;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetId;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetPhoto;
+import ch.zhaw.ssdd.pas.domain.pet.model.PetSearchCriteria;
 import ch.zhaw.ssdd.pas.domain.shared.LocalFilePath;
 import ch.zhaw.ssdd.pas.domain.shared.UploadTimestamp;
 import ch.zhaw.ssdd.pas.domain.user.model.UserId;
@@ -43,7 +44,13 @@ public class PetPersistenceAdapter implements PetPersistence {
         return toDomain(savedEntity);
     }
 
-    // --- Mapping Methods ---
+    @Override
+    public List<Pet> search(PetSearchCriteria searchCriteria) {
+        return petEntityRepository.search(searchCriteria.searchText())
+                .stream()
+                .map(this::toDomain)
+                .toList();
+    }
 
     private PetEntity toEntity(Pet domain) {
         PetEntity entity = new PetEntity();
@@ -97,8 +104,8 @@ public class PetPersistenceAdapter implements PetPersistence {
                 .map(p -> new PetPhoto(
                         new LocalFilePath(p.getUrl()),
                         new UploadTimestamp(LocalDateTime.now()), // Or store upload time in PictureEntity
-                        new PetId(entity.getId().toString()),
-                        new UserId(entity.getShelterId().toString()) // Or store uploader in PictureEntity
+                        new PetId(entity.getId().toString())
+
                 ))
                 .collect(Collectors.toList());
 
@@ -107,15 +114,12 @@ public class PetPersistenceAdapter implements PetPersistence {
                 new PetId(entity.getId().toString()),
                 new UserId(entity.getShelterId().toString()),
                 entity.getDateOfBirth(),
+                entity.getSpecies(),
                 entity.getBreed(),
                 entity.getName(),
                 domainPhotos,
                 domainComments
         );
-        
-        // Note: The Pet constructor initializes the adoptionStatus to AVAILABLE.
-        // If the entity has a different status, you need a way to set it.
-        // Assuming there is a method or reflection is needed if no such method exists.
 
         return pet;
     }

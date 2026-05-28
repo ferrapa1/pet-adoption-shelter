@@ -1,6 +1,7 @@
 package ch.zhaw.ssdd.pas.ports.inbound;
 
 import ch.zhaw.ssdd.pas.domain.pet.model.Breed;
+import ch.zhaw.ssdd.pas.domain.pet.model.Species;
 import ch.zhaw.ssdd.pas.domain.user.model.UserId;
 
 import java.time.LocalDate;
@@ -26,12 +27,14 @@ public record CreatePetCommand(
         UserId shelterId,
         String name,
         LocalDate dateOfBirth,
+        Species species,
         Breed breed
 ) {
     public CreatePetCommand {
         Objects.requireNonNull(shelterId, "Shelter ID cannot be null.");
         Objects.requireNonNull(name, "Name cannot be null.");
         Objects.requireNonNull(dateOfBirth, "Date of birth cannot be null.");
+        Objects.requireNonNull(species, "Species cannot be null.");
         Objects.requireNonNull(breed, "Breed cannot be null.");
     }
 }

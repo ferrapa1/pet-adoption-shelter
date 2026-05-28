@@ -14,9 +14,9 @@ public class AddressEntity {
 
     @Id
     private UUID id;
-    @Column(nullable = false, length = 60)
+    @Column(nullable = false)
     private String street;
-    @Column(nullable = false, length = 6)
+    @Column(nullable = false)
     private String houseNumber;
     @Column(nullable = false)
     private int plz;

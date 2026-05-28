@@ -16,6 +16,7 @@ public class Pet {
     private final PetId petId;
     private final UserId shelterId;
     private final LocalDate dateOfBirth;
+    private final Species species;
     private final Breed breed;
     private final String name;
     private List<PetPhoto> petPhotos; // Changed to mutable list
@@ -25,6 +26,7 @@ public class Pet {
     public Pet(PetId petId,
                UserId shelterId,
                LocalDate dateOfBirth,
+               Species species,
                Breed breed,
                String name,
                List<PetPhoto> petPhotos,
@@ -32,6 +34,7 @@ public class Pet {
         this.petId = petId;
         this.shelterId = shelterId;
         this.dateOfBirth = dateOfBirth;
+        this.species = species;
         this.breed = breed;
         this.name = name;
         this.petPhotos = new ArrayList<>(petPhotos); // Use mutable list
@@ -70,6 +73,10 @@ public class Pet {
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public Species getSpecies() {
+        return species;
     }
 
     public Breed getBreed() {

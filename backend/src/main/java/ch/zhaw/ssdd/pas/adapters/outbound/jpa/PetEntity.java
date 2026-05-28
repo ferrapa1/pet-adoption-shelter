@@ -2,6 +2,7 @@ package ch.zhaw.ssdd.pas.adapters.outbound.jpa;
 
 import ch.zhaw.ssdd.pas.domain.pet.model.Breed;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetAdoptionStatus;
+import ch.zhaw.ssdd.pas.domain.pet.model.Species;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -24,6 +25,10 @@ public class PetEntity {
 
     @Column(nullable = false)
     private LocalDate dateOfBirth;
+
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "species"))
+    private Species species;
 
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "breed_name"))
@@ -51,6 +56,8 @@ public class PetEntity {
     public void setName(String name) { this.name = name; }
     public LocalDate getDateOfBirth() { return dateOfBirth; }
     public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
+    public Species getSpecies() { return species; }
+    public void setSpecies(Species species) { this.species = species; }
     public Breed getBreed() { return breed; }
     public void setBreed(Breed breed) { this.breed = breed; }
     public PetAdoptionStatus getAdoptionStatus() { return adoptionStatus; }

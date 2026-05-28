@@ -2,7 +2,9 @@ package ch.zhaw.ssdd.pas.ports.outbound;
 
 import ch.zhaw.ssdd.pas.domain.pet.Pet;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetId;
+import ch.zhaw.ssdd.pas.domain.pet.model.PetSearchCriteria;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PetPersistence {
@@ -16,4 +18,6 @@ public interface PetPersistence {
      * @return The saved Pet.
      */
     Pet save(Pet pet);
+
+    List<Pet> search(PetSearchCriteria searchCriteria);
 }

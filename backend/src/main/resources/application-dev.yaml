@@ -7,26 +7,27 @@ spring:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
     username: sa
-    password: ""
+    password:
 
-  # Use Flyway to manage the schema, and Hibernate to validate it.
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
     show-sql: true
-
-  # Disable Spring Boot's default schema/data script handling.
-  # This gives full control to Flyway.
-  sql:
-    init:
-      mode: never
+    defer-datasource-initialization: true
 
   h2:
     console:
       enabled: true
 
-  # Flyway is now the authority for all schema changes.
+  sql:
+    init:
+      mode: always
+
   flyway:
-    enabled: true
-    # This tells Flyway where to find the migration scripts.
-    locations: classpath:db/migration
+    enabled: false
+
+logging:
+  level:
+    web: TRACE
+    org.springframework.web: TRACE
+
