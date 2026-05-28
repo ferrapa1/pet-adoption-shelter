@@ -26,7 +26,7 @@ public class AdoptionRequestEntity {
     @Column(nullable = false)
     private AdoptionRequestStatus requestStatus;
 
-    protected AdoptionRequestEntity() {
+    public AdoptionRequestEntity() {
     }
 
     public AdoptionRequestEntity(UUID id, UUID adopterId, UUID petId, LocalDateTime createdAt, AdoptionRequestStatus requestStatus) {

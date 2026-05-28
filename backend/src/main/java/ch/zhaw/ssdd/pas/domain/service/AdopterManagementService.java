@@ -10,19 +10,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdopterManagementService implements RegisterAdopterUseCase, LoadAdopterUseCase {
 
-    private final AdopterPersistence adopterPersistance;
+    private final AdopterPersistence adopterPersistence;
 
-    public AdopterManagementService(AdopterPersistence adopterPersistance) {
-        this.adopterPersistance = adopterPersistance;
+    public AdopterManagementService(AdopterPersistence adopterPersistence) {
+        this.adopterPersistence = adopterPersistence;
     }
 
     @Override
     public UserId registerAdopter(Adopter adopter) {
-       return adopterPersistance.persistAdopter(adopter);
+       return adopterPersistence.persistAdopter(adopter);
     }
 
     @Override
     public Adopter load(UserId userId) {
-        return adopterPersistance.findByUserId(userId);
+        return adopterPersistence.findByUserId(userId);
     }
 }

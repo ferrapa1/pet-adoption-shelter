@@ -8,4 +8,12 @@ import java.util.Optional;
 public interface PetPersistence {
 
     Optional<Pet> findById(PetId id);
+
+    /**
+     * Saves a Pet aggregate to the underlying persistence mechanism.
+     *
+     * @param pet The Pet to save.
+     * @return The saved Pet.
+     */
+    Pet save(Pet pet);
 }

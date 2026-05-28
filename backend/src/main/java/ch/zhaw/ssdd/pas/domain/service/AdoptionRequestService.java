@@ -25,7 +25,8 @@ public class AdoptionRequestService implements SubmitAdoptionRequestUseCase {
     }
 
     @Override
-    public AdoptionRequest submitAdoptionRequest(UserId adopterId, PetId petId) {
+    public AdoptionRequest submitAdoptionRequest(AdoptionRequest request) {
+        PetId petId = request.getPetId();
         Pet pet = petPersistence.findById(petId)
                 .orElseThrow(() -> new IllegalArgumentException("Pet with ID " + petId.value() + " not found."));
 
@@ -34,7 +35,7 @@ public class AdoptionRequestService implements SubmitAdoptionRequestUseCase {
         }
 
         AdoptionRequestId newId = new AdoptionRequestId(UUID.randomUUID().toString());
-        AdoptionRequest newRequest = new AdoptionRequest(newId, adopterId, petId);
+        AdoptionRequest newRequest = new AdoptionRequest(newId, request.getAdopterId(), petId);
 
         return adoptionRequestPersistence.save(newRequest);
     }

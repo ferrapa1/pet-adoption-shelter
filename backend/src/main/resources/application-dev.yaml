@@ -9,19 +9,24 @@ spring:
     username: sa
     password: ""
 
+  # Use Flyway to manage the schema, and Hibernate to validate it.
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
     show-sql: true
-    defer-datasource-initialization: true
+
+  # Disable Spring Boot's default schema/data script handling.
+  # This gives full control to Flyway.
+  sql:
+    init:
+      mode: never
 
   h2:
     console:
       enabled: true
 
-  sql:
-    init:
-      mode: always
-
+  # Flyway is now the authority for all schema changes.
   flyway:
-    enabled: false
+    enabled: true
+    # This tells Flyway where to find the migration scripts.
+    locations: classpath:db/migration

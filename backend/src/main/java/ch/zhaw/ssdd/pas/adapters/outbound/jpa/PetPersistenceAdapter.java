@@ -1,18 +1,122 @@
 package ch.zhaw.ssdd.pas.adapters.outbound.jpa;
 
 import ch.zhaw.ssdd.pas.domain.pet.Pet;
+import ch.zhaw.ssdd.pas.domain.pet.model.Comment;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetId;
+import ch.zhaw.ssdd.pas.domain.pet.model.PetPhoto;
+import ch.zhaw.ssdd.pas.domain.shared.LocalFilePath;
+import ch.zhaw.ssdd.pas.domain.shared.UploadTimestamp;
+import ch.zhaw.ssdd.pas.domain.user.model.UserId;
 import ch.zhaw.ssdd.pas.ports.outbound.PetPersistence;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
+/**
+ * Implements the outbound port for Pet persistence.
+ * This adapter connects the application core to the database.
+ */
 @Service
 public class PetPersistenceAdapter implements PetPersistence {
 
+    private final PetEntityRepository petEntityRepository;
+
+    public PetPersistenceAdapter(PetEntityRepository petEntityRepository) {
+        this.petEntityRepository = petEntityRepository;
+    }
+
     @Override
     public Optional<Pet> findById(PetId id) {
-        //TODO
-        return Optional.empty();
+        UUID uuid = UUID.fromString(id.value());
+        return petEntityRepository.findById(uuid)
+                .map(this::toDomain);
+    }
+
+    @Override
+    public Pet save(Pet pet) {
+        PetEntity entity = toEntity(pet);
+        PetEntity savedEntity = petEntityRepository.save(entity);
+        return toDomain(savedEntity);
+    }
+
+    // --- Mapping Methods ---
+
+    private PetEntity toEntity(Pet domain) {
+        PetEntity entity = new PetEntity();
+        entity.setId(UUID.fromString(domain.getPetId().value()));
+        entity.setShelterId(UUID.fromString(domain.getShelterId().value()));
+        entity.setName(domain.getName());
+        entity.setDateOfBirth(domain.getDateOfBirth());
+        entity.setBreed(domain.getBreed());
+        entity.setAdoptionStatus(domain.getAdoptionStatus());
+
+        // Map Comments
+        List<CommentEntity> commentEntities = domain.getComments().stream()
+                .map(comment -> new CommentEntity(
+                        UUID.randomUUID(), // No ID because it's a ValueObject, generate one for the DB
+                        UUID.fromString(comment.getAuthorId().value()),
+                        comment.getContent(),
+                        comment.getTimestamp(),
+                        comment.getParentId() != null ? UUID.fromString(comment.getParentId()) : null,
+                        entity // Link back to parent
+                ))
+                .collect(Collectors.toList());
+        entity.setComments(commentEntities);
+
+        // Map Pictures
+        List<PictureEntity> pictureEntities = domain.getPetPhotos().stream()
+                .map(picture -> new PictureEntity(
+                        UUID.randomUUID(), // No ID because it's a ValueObject, generate one for the DB
+                        picture.localFilePath().localPath(),
+                        entity // Link back to parent
+                ))
+                .collect(Collectors.toList());
+        entity.setPictures(pictureEntities);
+
+        return entity;
+    }
+
+    private Pet toDomain(PetEntity entity) {
+        
+        // Convert JPA Comments to Domain Comments
+        List<Comment> domainComments = entity.getComments().stream()
+                .map(c -> new Comment(
+                        new UserId(c.getAuthorId().toString()),
+                        c.getContent(),
+                        c.getTimestamp(),
+                        c.getParentId() != null ? c.getParentId().toString() : null
+                ))
+                .collect(Collectors.toList());
+
+        // Convert JPA Pictures to Domain PetPhotos
+        List<PetPhoto> domainPhotos = entity.getPictures().stream()
+                .map(p -> new PetPhoto(
+                        new LocalFilePath(p.getUrl()),
+                        new UploadTimestamp(LocalDateTime.now()), // Or store upload time in PictureEntity
+                        new PetId(entity.getId().toString()),
+                        new UserId(entity.getShelterId().toString()) // Or store uploader in PictureEntity
+                ))
+                .collect(Collectors.toList());
+
+        // Reconstitute the core Pet aggregate using the full constructor
+        Pet pet = new Pet(
+                new PetId(entity.getId().toString()),
+                new UserId(entity.getShelterId().toString()),
+                entity.getDateOfBirth(),
+                entity.getBreed(),
+                entity.getName(),
+                domainPhotos,
+                domainComments
+        );
+        
+        // Note: The Pet constructor initializes the adoptionStatus to AVAILABLE.
+        // If the entity has a different status, you need a way to set it.
+        // Assuming there is a method or reflection is needed if no such method exists.
+
+        return pet;
     }
 }

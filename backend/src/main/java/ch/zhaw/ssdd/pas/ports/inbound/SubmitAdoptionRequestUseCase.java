@@ -5,5 +5,5 @@ import ch.zhaw.ssdd.pas.domain.pet.model.PetId;
 import ch.zhaw.ssdd.pas.domain.user.model.UserId;
 
 public interface SubmitAdoptionRequestUseCase {
-    AdoptionRequest submitAdoptionRequest(UserId adopterId, PetId petId);
+    AdoptionRequest submitAdoptionRequest(AdoptionRequest request);
 }
