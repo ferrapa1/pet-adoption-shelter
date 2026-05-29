@@ -37,7 +37,6 @@ public class AdoptionRequestEntity {
         this.requestStatus = requestStatus;
     }
 
-    // Getters and Setters
     public UUID getId() {
         return id;
     }

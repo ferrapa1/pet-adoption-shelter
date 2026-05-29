@@ -46,7 +46,6 @@ public class PetEntity {
 
     public PetEntity() {}
 
-    // Getters and Setters
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
     public UUID getShelterId() { return shelterId; }

@@ -17,7 +17,6 @@ public class PictureEntity {
     @JoinColumn(name = "pet_id")
     private PetEntity pet;
 
-    // JPA requires a no-arg constructor
     protected PictureEntity() {}
 
     public PictureEntity(UUID id, String url, PetEntity pet) {
@@ -26,7 +25,6 @@ public class PictureEntity {
         this.pet = pet;
     }
 
-    // Getters and Setters
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
     public String getUrl() { return url; }

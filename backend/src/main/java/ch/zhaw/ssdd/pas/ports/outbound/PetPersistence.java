@@ -19,5 +19,11 @@ public interface PetPersistence {
      */
     Pet save(Pet pet);
 
+    /**
+     * Searches for pets based on the provided criteria.
+     *
+     * @param searchCriteria The criteria to filter pets.
+     * @return A list of pets matching the criteria.
+     */
     List<Pet> search(PetSearchCriteria searchCriteria);
 }

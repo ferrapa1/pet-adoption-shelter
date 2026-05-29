@@ -1,4 +1,4 @@
 package ch.zhaw.ssdd.pas.ports.outbound;
 
-public interface UserPersistance {
+public interface UserPersistence {
 }

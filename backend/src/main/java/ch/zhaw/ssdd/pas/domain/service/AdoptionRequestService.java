@@ -5,7 +5,7 @@ import ch.zhaw.ssdd.pas.domain.adoption.model.AdoptionRequestId;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetAdoptionStatus;
 import ch.zhaw.ssdd.pas.domain.pet.Pet;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetId;
-import ch.zhaw.ssdd.pas.domain.user.model.UserId;
+import ch.zhaw.ssdd.pas.ports.inbound.SubmitAdoptionRequestCommand;
 import ch.zhaw.ssdd.pas.ports.inbound.SubmitAdoptionRequestUseCase;
 import ch.zhaw.ssdd.pas.ports.outbound.AdoptionRequestPersistence;
 import ch.zhaw.ssdd.pas.ports.outbound.PetPersistence;
@@ -25,8 +25,8 @@ public class AdoptionRequestService implements SubmitAdoptionRequestUseCase {
     }
 
     @Override
-    public AdoptionRequest submitAdoptionRequest(AdoptionRequest request) {
-        PetId petId = request.getPetId();
+    public AdoptionRequest submitAdoptionRequest(SubmitAdoptionRequestCommand command) {
+        PetId petId = command.petId();
         Pet pet = petPersistence.findById(petId)
                 .orElseThrow(() -> new IllegalArgumentException("Pet with ID " + petId.value() + " not found."));
 
@@ -35,7 +35,7 @@ public class AdoptionRequestService implements SubmitAdoptionRequestUseCase {
         }
 
         AdoptionRequestId newId = new AdoptionRequestId(UUID.randomUUID().toString());
-        AdoptionRequest newRequest = new AdoptionRequest(newId, request.getAdopterId(), petId);
+        AdoptionRequest newRequest = new AdoptionRequest(newId, command.adopterId(), petId);
 
         return adoptionRequestPersistence.save(newRequest);
     }

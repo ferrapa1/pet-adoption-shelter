@@ -1,12 +1,12 @@
 package ch.zhaw.ssdd.pas.adapters.outbound.jpa;
 
 import ch.zhaw.ssdd.pas.domain.user.model.Address;
-import ch.zhaw.ssdd.pas.ports.outbound.UserPersistance;
+import ch.zhaw.ssdd.pas.ports.outbound.UserPersistence;
 import org.springframework.stereotype.Service;
 
 //TODO
 @Service
-public class UserPersistenceAdapter implements UserPersistance {
+public class UserPersistenceAdapter implements UserPersistence {
 
     private final UserEntityRepository userEntityRepository;
 

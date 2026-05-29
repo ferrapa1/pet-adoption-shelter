@@ -61,7 +61,6 @@ public class PetPersistenceAdapter implements PetPersistence {
         entity.setBreed(domain.getBreed());
         entity.setAdoptionStatus(domain.getAdoptionStatus());
 
-        // Map Comments
         List<CommentEntity> commentEntities = domain.getComments().stream()
                 .map(comment -> new CommentEntity(
                         UUID.randomUUID(), // No ID because it's a ValueObject, generate one for the DB
@@ -74,7 +73,6 @@ public class PetPersistenceAdapter implements PetPersistence {
                 .collect(Collectors.toList());
         entity.setComments(commentEntities);
 
-        // Map Pictures
         List<PictureEntity> pictureEntities = domain.getPetPhotos().stream()
                 .map(picture -> new PictureEntity(
                         UUID.randomUUID(), // No ID because it's a ValueObject, generate one for the DB
@@ -89,7 +87,6 @@ public class PetPersistenceAdapter implements PetPersistence {
 
     private Pet toDomain(PetEntity entity) {
         
-        // Convert JPA Comments to Domain Comments
         List<Comment> domainComments = entity.getComments().stream()
                 .map(c -> new Comment(
                         new UserId(c.getAuthorId().toString()),
@@ -99,7 +96,6 @@ public class PetPersistenceAdapter implements PetPersistence {
                 ))
                 .collect(Collectors.toList());
 
-        // Convert JPA Pictures to Domain PetPhotos
         List<PetPhoto> domainPhotos = entity.getPictures().stream()
                 .map(p -> new PetPhoto(
                         new LocalFilePath(p.getUrl()),
@@ -109,7 +105,6 @@ public class PetPersistenceAdapter implements PetPersistence {
                 ))
                 .collect(Collectors.toList());
 
-        // Reconstitute the core Pet aggregate using the full constructor
         Pet pet = new Pet(
                 new PetId(entity.getId().toString()),
                 new UserId(entity.getShelterId().toString()),
