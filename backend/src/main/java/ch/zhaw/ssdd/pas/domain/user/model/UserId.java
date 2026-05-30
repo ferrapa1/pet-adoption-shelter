@@ -8,5 +8,11 @@ import java.util.Objects;
 public record UserId(String value) {
     public UserId {
         Objects.requireNonNull(value, "UserId cannot be null.");
+        if (value.isBlank()) {
+            throw new IllegalArgumentException("UserId cannot be empty.");
+        }
+        if (value.length() > 20) {
+            throw new IllegalArgumentException("UserId cannot be longer than 20 characters.");
+        }
     }
 }

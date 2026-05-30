@@ -1,5 +1,6 @@
-package ch.zhaw.ssdd.pas.adapters.outbound.jpa;
+package ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.entity;
 
+import ch.zhaw.ssdd.pas.adapters.outbound.jpa.AddressEntity;
 import jakarta.persistence.*;
 import java.util.UUID;
 
@@ -21,7 +22,8 @@ public abstract class UserEntity {
 
     @Column(length = 16)
     private String phoneNumber;
-    @Column(length = 50)
+    
+    @Column(length = 50, unique = true)
     private String email;
 
     public UUID getId() {

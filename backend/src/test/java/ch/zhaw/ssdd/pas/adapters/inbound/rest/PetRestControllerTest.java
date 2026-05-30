@@ -1,9 +1,11 @@
 package ch.zhaw.ssdd.pas.adapters.inbound.rest;
 
 import ch.zhaw.ssdd.pas.adapters.inbound.rest.dto.PetDTO;
+import ch.zhaw.ssdd.pas.adapters.outbound.jpa.CommentEntityRepository;
 import ch.zhaw.ssdd.pas.adapters.outbound.jpa.PetEntity;
 import ch.zhaw.ssdd.pas.adapters.outbound.jpa.PetEntityRepository;
 import ch.zhaw.ssdd.pas.adapters.outbound.jpa.PetPersistenceAdapter;
+import ch.zhaw.ssdd.pas.adapters.outbound.jpa.PictureEntityRepository;
 import ch.zhaw.ssdd.pas.domain.pet.model.Breed;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetAdoptionStatus;
 import ch.zhaw.ssdd.pas.domain.pet.model.Species;
@@ -19,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import tools.jackson.databind.ObjectMapper;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -44,11 +47,18 @@ class PetRestControllerTest {
     @MockitoBean
     private PetEntityRepository petEntityRepository;
 
+    @MockitoBean
+    private CommentEntityRepository commentEntityRepository;
+
+    @MockitoBean
+    private PictureEntityRepository pictureEntityRepository;
+
     @Test
     void testSimpleSearch() throws Exception {
         PetEntity entity = new PetEntity();
         entity.setId(UUID.randomUUID());
         entity.setName("Mock");
+        entity.setDateOfBirth(LocalDate.now());
         entity.setSpecies(new Species("Dog"));
         entity.setBreed(new Breed("Husky"));
         entity.setAdoptionStatus(PetAdoptionStatus.AVAILABLE);
@@ -63,7 +73,7 @@ class PetRestControllerTest {
 
         Mockito.when(petEntityRepository.search("")).thenReturn(List.of(entity));
 
-        MvcResult mvcResult = mockMvc.perform(get("/")
+        MvcResult mvcResult = mockMvc.perform(get("/api/pets")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -77,7 +87,7 @@ class PetRestControllerTest {
     void testNothingFound() throws Exception {
         Mockito.when(petEntityRepository.search("")).thenReturn(new ArrayList<>());
 
-        MvcResult mvcResult = mockMvc.perform(get("/")
+        MvcResult mvcResult = mockMvc.perform(get("/api/pets")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();

@@ -1,5 +1,8 @@
-package ch.zhaw.ssdd.pas.adapters.outbound.jpa;
+package ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.adapter;
 
+import ch.zhaw.ssdd.pas.adapters.outbound.jpa.AddressEntity;
+import ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.entity.AdopterEntity;
+import ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.repository.AdopterEntityRepository;
 import ch.zhaw.ssdd.pas.domain.shared.SwissPhoneNumber;
 import ch.zhaw.ssdd.pas.domain.user.Adopter;
 import ch.zhaw.ssdd.pas.domain.user.model.*;
@@ -8,8 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.UUID;
 
-import static ch.zhaw.ssdd.pas.adapters.outbound.jpa.UserPersistenceAdapter.mapAddressFromDomain;
+import static ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.adapter.UserPersistenceAdapter.mapAddressFromDomain;
 import static java.lang.String.format;
 
 @Service
@@ -37,8 +41,19 @@ public class AdopterPersistenceAdapter implements AdopterPersistence {
         return mapFromEntity(entity.get());
     }
 
+    @Override
+    public boolean existsByUserId(UserId userId) {
+        return adopterEntityRepository.findByUserId(userId.value()).isPresent();
+    }
+
+    @Override
+    public boolean existsByEmail(EmailAddress email) {
+        return adopterEntityRepository.existsByEmail(email.value());
+    }
+
     private static AdopterEntity mapFromDomain(Adopter adopter) {
         AdopterEntity entity = new AdopterEntity();
+        entity.setId(UUID.randomUUID());
         entity.setUserId(adopter.getUserId().value());
         entity.setEmail(adopter.getContactData().email().value());
         entity.setPhoneNumber(adopter.getContactData().phone().value());

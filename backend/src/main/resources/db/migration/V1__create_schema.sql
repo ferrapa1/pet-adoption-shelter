@@ -10,11 +10,11 @@ CREATE TABLE address (
 
 CREATE TABLE app_user (
     id UUID PRIMARY KEY,
+    user_id VARCHAR(20) UNIQUE NOT NULL,
     user_type VARCHAR(31),
-    user_id VARCHAR(255) UNIQUE,
     address_id UUID,
     phone_number VARCHAR(255),
-    email VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
     has_garden BOOLEAN,
     has_children BOOLEAN,
     FOREIGN KEY (address_id) REFERENCES address(id)
@@ -27,7 +27,8 @@ CREATE TABLE pet (
     date_of_birth DATE NOT NULL,
     species VARCHAR(255),
     breed_name VARCHAR(255),
-    adoption_status VARCHAR(255) NOT NULL
+    adoption_status VARCHAR(255) NOT NULL,
+    FOREIGN KEY (shelter_id) REFERENCES app_user(id)
 );
 
 CREATE TABLE pet_picture (

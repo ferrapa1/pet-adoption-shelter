@@ -17,7 +17,7 @@ public class PetRestController {
         this.searchPetUseCase = searchPetUseCase;
     }
 
-    @GetMapping("/")
+    @GetMapping("/api/pets")
     public List<PetDTO> getAllPets(@RequestParam(required = false) String searchText) {
         return searchPetUseCase.search(searchText)
                 .stream()

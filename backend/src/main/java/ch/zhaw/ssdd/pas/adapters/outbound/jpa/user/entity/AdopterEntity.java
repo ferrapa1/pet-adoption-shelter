@@ -1,4 +1,4 @@
-package ch.zhaw.ssdd.pas.adapters.outbound.jpa;
+package ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.entity;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

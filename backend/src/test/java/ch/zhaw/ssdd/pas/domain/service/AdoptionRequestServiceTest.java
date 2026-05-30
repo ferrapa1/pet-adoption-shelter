@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -42,13 +43,13 @@ class AdoptionRequestServiceTest {
 
     @Test
     void testSubmitAdoptionRequest_Success() {
-        PetId petId = new PetId("dummy-doggy");
-        UserId adopterId = new UserId("dummy-adopter-id");
+        PetId petId = new PetId(UUID.randomUUID().toString());
+        UserId adopterId = new UserId(UUID.randomUUID().toString());
         SubmitAdoptionRequestCommand command = new SubmitAdoptionRequestCommand(adopterId, petId);
 
         Pet availablePet = new Pet(
                 petId,
-                new UserId("shelter-id"),
+                new UserId(UUID.randomUUID().toString()),
                 LocalDate.now(),
                 new Species("Dog"),
                 new Breed("Golden Retriever"),
@@ -71,8 +72,8 @@ class AdoptionRequestServiceTest {
 
     @Test
     void testSubmitAdoptionRequest_PetNotAvailable() {
-        PetId petId = new PetId("dummy-doggy");
-        UserId adopterId = new UserId("dummy-adopter-id");
+        PetId petId = new PetId(UUID.randomUUID().toString());
+        UserId adopterId = new UserId(UUID.randomUUID().toString());
         SubmitAdoptionRequestCommand command = new SubmitAdoptionRequestCommand(adopterId, petId);
 
         Pet mockPet = Mockito.mock(Pet.class);
@@ -91,8 +92,9 @@ class AdoptionRequestServiceTest {
     
     @Test
     void testSubmitAdoptionRequest_PetNotFound() {
-        PetId petId = new PetId("dummy-doggy");
-        UserId adopterId = new UserId("dummy-adopter-id");
+        String petUuid = UUID.randomUUID().toString();
+        PetId petId = new PetId(petUuid);
+        UserId adopterId = new UserId(UUID.randomUUID().toString());
         SubmitAdoptionRequestCommand command = new SubmitAdoptionRequestCommand(adopterId, petId);
 
         Mockito.when(petPersistence.findById(petId)).thenReturn(Optional.empty());
@@ -101,7 +103,7 @@ class AdoptionRequestServiceTest {
             service.submitAdoptionRequest(command);
         });
 
-        assertEquals("Pet with ID dummy-doggy not found.", exception.getMessage());
+        assertEquals("Pet with ID " + petUuid + " not found.", exception.getMessage());
         Mockito.verify(petPersistence).findById(petId);
         Mockito.verify(adoptionRequestPersistence, Mockito.never()).save(any());
     }
