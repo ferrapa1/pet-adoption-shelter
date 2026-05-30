@@ -1,6 +1,5 @@
 package ch.zhaw.ssdd.pas.domain.user.model;
 
-import ch.zhaw.ssdd.pas.domain.shared.SwissPhoneNumber;
 import ch.zhaw.ssdd.pas.stereotypes.ValueObject;
 
 import java.util.Objects;

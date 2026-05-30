@@ -3,7 +3,7 @@ package ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.adapter;
 import ch.zhaw.ssdd.pas.adapters.outbound.jpa.AddressEntity;
 import ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.entity.AdopterEntity;
 import ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.repository.AdopterEntityRepository;
-import ch.zhaw.ssdd.pas.domain.shared.SwissPhoneNumber;
+import ch.zhaw.ssdd.pas.domain.user.model.SwissPhoneNumber;
 import ch.zhaw.ssdd.pas.domain.user.Adopter;
 import ch.zhaw.ssdd.pas.domain.user.model.*;
 import ch.zhaw.ssdd.pas.ports.outbound.AdopterPersistence;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.UUID;
 
 import static ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.adapter.UserPersistenceAdapter.mapAddressFromDomain;
 import static java.lang.String.format;

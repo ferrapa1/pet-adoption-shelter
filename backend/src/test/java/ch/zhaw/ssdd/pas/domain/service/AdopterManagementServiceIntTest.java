@@ -1,6 +1,6 @@
 package ch.zhaw.ssdd.pas.domain.service;
 
-import ch.zhaw.ssdd.pas.domain.shared.SwissPhoneNumber;
+import ch.zhaw.ssdd.pas.domain.user.model.SwissPhoneNumber;
 import ch.zhaw.ssdd.pas.domain.user.Adopter;
 import ch.zhaw.ssdd.pas.domain.user.model.*;
 import ch.zhaw.ssdd.pas.ports.inbound.RegisterAdopterCommand;

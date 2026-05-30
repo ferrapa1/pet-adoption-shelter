@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static ch.zhaw.ssdd.pas.adapters.inbound.rest.PetRestController.BASE_PATH;
+import static ch.zhaw.ssdd.pas.adapters.inbound.rest.PetController.BASE_PATH;
 
 @RestController
-@RequestMapping(BASE_PATH)
-public class PetRestController {
+@RequestMapping(value = BASE_PATH)
+public class PetController {
 
     public static final String BASE_PATH = "/api/pets";
 
     private final SearchPetUseCase searchPetUseCase;
 
-    public PetRestController(SearchPetUseCase searchPetUseCase) {
+    public PetController(SearchPetUseCase searchPetUseCase) {
         this.searchPetUseCase = searchPetUseCase;
     }
 

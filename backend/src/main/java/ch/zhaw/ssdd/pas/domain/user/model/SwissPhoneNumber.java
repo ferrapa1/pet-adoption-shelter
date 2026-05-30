@@ -1,4 +1,4 @@
-package ch.zhaw.ssdd.pas.domain.shared;
+package ch.zhaw.ssdd.pas.domain.user.model;
 
 import ch.zhaw.ssdd.pas.stereotypes.ValueObject;
 

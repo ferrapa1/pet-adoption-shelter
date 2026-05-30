@@ -29,15 +29,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static ch.zhaw.ssdd.pas.adapters.inbound.rest.PetRestController.BASE_PATH;
+import static ch.zhaw.ssdd.pas.adapters.inbound.rest.PetController.BASE_PATH;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = PetRestController.class)
+@WebMvcTest(controllers = PetController.class)
 @ContextConfiguration(classes = {
-        PetRestController.class,
+        PetController.class,
         PetManagementService.class,
         PetPersistenceAdapter.class
 })
