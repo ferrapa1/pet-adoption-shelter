@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "pet_comment")
+@Table(name = "comment")
 public class CommentEntity {
 
     @Id
@@ -27,15 +27,20 @@ public class CommentEntity {
     @JoinColumn(name = "pet_id")
     private PetEntity pet;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="adoption_id")
+    private AdoptionRequestEntity adoptionRequest;
+
     protected CommentEntity() {}
 
-    public CommentEntity(UUID id, UUID authorId, String content, LocalDateTime timestamp, UUID parentId, PetEntity pet) {
+    public CommentEntity(UUID id, UUID authorId, String content, LocalDateTime timestamp, UUID parentId, PetEntity pet, AdoptionRequestEntity adoptionRequest) {
         this.id = id;
         this.authorId = authorId;
         this.content = content;
         this.timestamp = timestamp;
         this.parentId = parentId;
         this.pet = pet;
+        this.adoptionRequest = adoptionRequest;
     }
 
     public UUID getId() { return id; }
@@ -50,4 +55,6 @@ public class CommentEntity {
     public void setParentId(UUID parentId) { this.parentId = parentId; }
     public PetEntity getPet() { return pet; }
     public void setPet(PetEntity pet) { this.pet = pet; }
+    public AdoptionRequestEntity getAdoptionRequest() { return adoptionRequest; }
+    public void setAdoptionRequest(AdoptionRequestEntity adoptionRequest) { this.adoptionRequest = adoptionRequest; }
 }

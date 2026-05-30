@@ -2,18 +2,17 @@
 
 CREATE TABLE address (
     id UUID PRIMARY KEY,
-    street VARCHAR(255),
-    house_number VARCHAR(255),
-    plz INT,
-    city VARCHAR(255)
+    street VARCHAR(255) NOT NULL,
+    house_number VARCHAR(10) NOT NULL,
+    plz INT NOT NULL,
+    city VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE app_user (
     id UUID PRIMARY KEY,
-    user_id VARCHAR(20) UNIQUE NOT NULL,
-    user_type VARCHAR(31),
+    user_type VARCHAR(31) NOT NULL,
     address_id UUID,
-    phone_number VARCHAR(255),
+    phone_number VARCHAR(16),
     email VARCHAR(255) UNIQUE,
     has_garden BOOLEAN,
     has_children BOOLEAN,
@@ -38,15 +37,18 @@ CREATE TABLE pet_picture (
     FOREIGN KEY (pet_id) REFERENCES pet(id)
 );
 
-CREATE TABLE pet_comment (
+CREATE TABLE comment (
     id UUID PRIMARY KEY,
     author_id UUID NOT NULL,
     content VARCHAR(1000) NOT NULL,
     timestamp TIMESTAMP NOT NULL,
     parent_id UUID,
     pet_id UUID,
+    adoption_id UUID,
     FOREIGN KEY (pet_id) REFERENCES pet(id),
-    FOREIGN KEY (author_id) REFERENCES app_user(id)
+    FOREIGN KEY (adoption_id) REFERENCES adoption_request(id),
+    FOREIGN KEY (author_id) REFERENCES app_user(id),
+    FOREIGN KEY (parent_id) REFERENCES comment(id)
 );
 
 CREATE TABLE adoption_request (

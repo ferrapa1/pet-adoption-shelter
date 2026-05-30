@@ -60,7 +60,7 @@ public class PetPersistenceAdapter implements PetPersistence {
         PetEntity entity = new PetEntity();
         entity.setId(UUID.fromString(domain.getPetId().value()));
         
-        UserEntity shelterEntity = userEntityRepository.findByUserId(domain.getShelterId().value())
+        UserEntity shelterEntity = userEntityRepository.findById(domain.getShelterId().value())
                 .orElseThrow(() -> new IllegalStateException("Cannot save Pet: Shelter user not found with ID " + domain.getShelterId().value()));
         entity.setShelterId(shelterEntity.getId());
         
@@ -72,7 +72,7 @@ public class PetPersistenceAdapter implements PetPersistence {
 
         List<CommentEntity> commentEntities = domain.getComments().stream()
                 .map(comment -> {
-                    UserEntity authorEntity = userEntityRepository.findByUserId(comment.getAuthorId().value())
+                    UserEntity authorEntity = userEntityRepository.findById(comment.getAuthorId().value())
                             .orElseThrow(() -> new IllegalStateException("Cannot save Comment: Author user not found with ID " + comment.getAuthorId().value()));
                             
                     return new CommentEntity(
@@ -81,7 +81,8 @@ public class PetPersistenceAdapter implements PetPersistence {
                         comment.getContent(),
                         comment.getTimestamp(),
                         comment.getParentId() != null ? UUID.fromString(comment.getParentId()) : null,
-                        entity // Link back to parent
+                        entity,
+                            null //TODO rework
                     );
                 })
                 .collect(Collectors.toList());
@@ -107,7 +108,7 @@ public class PetPersistenceAdapter implements PetPersistence {
                             .orElseThrow(() -> new IllegalStateException("Data integrity error: Comment author UUID not found " + c.getAuthorId()));
                     
                     return new Comment(
-                        new UserId(authorEntity.getUserId()),
+                        new UserId(authorEntity.getId()),
                         c.getContent(),
                         c.getTimestamp(),
                         c.getParentId() != null ? c.getParentId().toString() : null
@@ -129,7 +130,7 @@ public class PetPersistenceAdapter implements PetPersistence {
 
         Pet pet = new Pet(
                 new PetId(entity.getId().toString()),
-                new UserId(shelterEntity.getUserId()),
+                new UserId(shelterEntity.getId()),
                 entity.getDateOfBirth(),
                 entity.getSpecies(),
                 entity.getBreed(),

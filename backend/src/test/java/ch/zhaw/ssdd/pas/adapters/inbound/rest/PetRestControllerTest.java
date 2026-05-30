@@ -6,6 +6,8 @@ import ch.zhaw.ssdd.pas.adapters.outbound.jpa.PetEntity;
 import ch.zhaw.ssdd.pas.adapters.outbound.jpa.PetEntityRepository;
 import ch.zhaw.ssdd.pas.adapters.outbound.jpa.PetPersistenceAdapter;
 import ch.zhaw.ssdd.pas.adapters.outbound.jpa.PictureEntityRepository;
+import ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.entity.ShelterEntity;
+import ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.repository.UserEntityRepository;
 import ch.zhaw.ssdd.pas.domain.pet.model.Breed;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetAdoptionStatus;
 import ch.zhaw.ssdd.pas.domain.pet.model.Species;
@@ -24,9 +26,12 @@ import tools.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+import static ch.zhaw.ssdd.pas.adapters.inbound.rest.PetRestController.BASE_PATH;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,6 +53,9 @@ class PetRestControllerTest {
     private PetEntityRepository petEntityRepository;
 
     @MockitoBean
+    private UserEntityRepository userEntityRepository;
+
+    @MockitoBean
     private CommentEntityRepository commentEntityRepository;
 
     @MockitoBean
@@ -55,14 +63,16 @@ class PetRestControllerTest {
 
     @Test
     void testSimpleSearch() throws Exception {
-        PetEntity entity = new PetEntity();
-        entity.setId(UUID.randomUUID());
-        entity.setName("Mock");
-        entity.setDateOfBirth(LocalDate.now());
-        entity.setSpecies(new Species("Dog"));
-        entity.setBreed(new Breed("Husky"));
-        entity.setAdoptionStatus(PetAdoptionStatus.AVAILABLE);
-        entity.setShelterId(UUID.randomUUID());
+        ShelterEntity shelterEntity = new ShelterEntity(UUID.randomUUID());
+
+        PetEntity petEntity = new PetEntity();
+        petEntity.setId(UUID.randomUUID());
+        petEntity.setName("Mock");
+        petEntity.setDateOfBirth(LocalDate.now());
+        petEntity.setSpecies(new Species("Dog"));
+        petEntity.setBreed(new Breed("Husky"));
+        petEntity.setAdoptionStatus(PetAdoptionStatus.AVAILABLE);
+        petEntity.setShelterId(shelterEntity.getId());
 
         PetDTO expectedPet = new PetDTO(
                 "Mock",
@@ -71,9 +81,10 @@ class PetRestControllerTest {
                 "AVAILABLE"
         );
 
-        Mockito.when(petEntityRepository.search("")).thenReturn(List.of(entity));
+        Mockito.when(userEntityRepository.findById(any())).thenReturn(Optional.of(shelterEntity));
+        Mockito.when(petEntityRepository.search("")).thenReturn(List.of(petEntity));
 
-        MvcResult mvcResult = mockMvc.perform(get("/api/pets")
+        MvcResult mvcResult = mockMvc.perform(get(BASE_PATH)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -87,7 +98,7 @@ class PetRestControllerTest {
     void testNothingFound() throws Exception {
         Mockito.when(petEntityRepository.search("")).thenReturn(new ArrayList<>());
 
-        MvcResult mvcResult = mockMvc.perform(get("/api/pets")
+        MvcResult mvcResult = mockMvc.perform(get(BASE_PATH)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();

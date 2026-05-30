@@ -44,12 +44,12 @@ class AdoptionRequestServiceTest {
     @Test
     void testSubmitAdoptionRequest_Success() {
         PetId petId = new PetId(UUID.randomUUID().toString());
-        UserId adopterId = new UserId(UUID.randomUUID().toString());
+        UserId adopterId = new UserId(UUID.randomUUID());
         SubmitAdoptionRequestCommand command = new SubmitAdoptionRequestCommand(adopterId, petId);
 
         Pet availablePet = new Pet(
                 petId,
-                new UserId(UUID.randomUUID().toString()),
+                new UserId(UUID.randomUUID()),
                 LocalDate.now(),
                 new Species("Dog"),
                 new Breed("Golden Retriever"),
@@ -73,7 +73,7 @@ class AdoptionRequestServiceTest {
     @Test
     void testSubmitAdoptionRequest_PetNotAvailable() {
         PetId petId = new PetId(UUID.randomUUID().toString());
-        UserId adopterId = new UserId(UUID.randomUUID().toString());
+        UserId adopterId = new UserId(UUID.randomUUID());
         SubmitAdoptionRequestCommand command = new SubmitAdoptionRequestCommand(adopterId, petId);
 
         Pet mockPet = Mockito.mock(Pet.class);
@@ -94,7 +94,7 @@ class AdoptionRequestServiceTest {
     void testSubmitAdoptionRequest_PetNotFound() {
         String petUuid = UUID.randomUUID().toString();
         PetId petId = new PetId(petUuid);
-        UserId adopterId = new UserId(UUID.randomUUID().toString());
+        UserId adopterId = new UserId(UUID.randomUUID());
         SubmitAdoptionRequestCommand command = new SubmitAdoptionRequestCommand(adopterId, petId);
 
         Mockito.when(petPersistence.findById(petId)).thenReturn(Optional.empty());

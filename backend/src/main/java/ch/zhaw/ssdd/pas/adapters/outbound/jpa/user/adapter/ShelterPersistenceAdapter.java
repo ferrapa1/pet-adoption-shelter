@@ -26,8 +26,7 @@ public class ShelterPersistenceAdapter implements ShelterPersistence {
     }
 
     private static ShelterEntity mapFromDomain(Shelter shelter) {
-        ShelterEntity entity = new ShelterEntity();
-        entity.setUserId(shelter.getUserId().value());
+        ShelterEntity entity = new ShelterEntity(shelter.getUserId().value());
         entity.setEmail(shelter.getContactData().email().value());
         entity.setPhoneNumber(shelter.getContactData().phone().value());
         entity.setAddress(mapAddressFromDomain(shelter.getAddress()));

@@ -9,6 +9,8 @@ import ch.zhaw.ssdd.pas.ports.inbound.RegisterAdopterUseCase;
 import ch.zhaw.ssdd.pas.ports.outbound.AdopterPersistence;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class AdopterManagementService implements RegisterAdopterUseCase, LoadAdopterUseCase {
 
@@ -20,18 +22,14 @@ public class AdopterManagementService implements RegisterAdopterUseCase, LoadAdo
 
     @Override
     public UserId registerAdopter(RegisterAdopterCommand command) {
-        UserId userId = new UserId(command.requestedUserId());
         EmailAddress email = command.contactData().email();
-
-        if (adopterPersistence.existsByUserId(userId)) {
-            throw new IllegalStateException("User ID '" + userId.value() + "' is already taken.");
-        }
 
         if (adopterPersistence.existsByEmail(email)) {
             throw new IllegalStateException("Email '" + email.value() + "' is already in use.");
         }
 
-        Adopter newAdopter = new Adopter(userId, command.contactData(), command.address())
+        UserId newUserId = new UserId(UUID.randomUUID());
+        Adopter newAdopter = new Adopter(newUserId, command.contactData(), command.address())
                 .withGarden(command.hasGarden())
                 .withChildren(command.hasChildren());
 

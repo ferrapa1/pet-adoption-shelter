@@ -31,8 +31,7 @@ class AdopterManagementServiceTest {
 
     @Test
     void testLoad() {
-        String uuidString = UUID.randomUUID().toString();
-        UserId targetId = new UserId(uuidString);
+        UserId targetId = new UserId(UUID.randomUUID());
         
         // Provide valid dummy objects to satisfy the Adopter constructor's non-null requirements
         ContactData dummyContact = new ContactData(new EmailAddress("dummy@mail.com"), new SwissPhoneNumber("+41 76 123 45 67"));
@@ -52,7 +51,6 @@ class AdopterManagementServiceTest {
 
     public static RegisterAdopterCommand buildDummyRegisterCommand() {
         return new RegisterAdopterCommand(
-                UUID.randomUUID().toString(),
                 new ContactData(
                         new EmailAddress("dummy@mail.com"),
                         new SwissPhoneNumber("+41 76 123 45 67")

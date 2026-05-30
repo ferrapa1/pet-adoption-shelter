@@ -34,7 +34,7 @@ public class AdopterPersistenceAdapter implements AdopterPersistence {
 
     @Override
     public Adopter findByUserId(UserId userId) {
-        Optional<AdopterEntity> entity = adopterEntityRepository.findByUserId(userId.value());
+        Optional<AdopterEntity> entity = adopterEntityRepository.findById(userId.value());
         if (entity.isEmpty()) {
             throw new NoSuchElementException(format("Cannot find AdopterEntity with userId=%s", userId));
         }
@@ -43,7 +43,7 @@ public class AdopterPersistenceAdapter implements AdopterPersistence {
 
     @Override
     public boolean existsByUserId(UserId userId) {
-        return adopterEntityRepository.findByUserId(userId.value()).isPresent();
+        return adopterEntityRepository.findById(userId.value()).isPresent();
     }
 
     @Override
@@ -52,9 +52,7 @@ public class AdopterPersistenceAdapter implements AdopterPersistence {
     }
 
     private static AdopterEntity mapFromDomain(Adopter adopter) {
-        AdopterEntity entity = new AdopterEntity();
-        entity.setId(UUID.randomUUID());
-        entity.setUserId(adopter.getUserId().value());
+        AdopterEntity entity = new AdopterEntity(adopter.getUserId().value());
         entity.setEmail(adopter.getContactData().email().value());
         entity.setPhoneNumber(adopter.getContactData().phone().value());
         entity.setAddress(mapAddressFromDomain(adopter.getAddress()));
@@ -66,7 +64,7 @@ public class AdopterPersistenceAdapter implements AdopterPersistence {
     private static Adopter mapFromEntity(AdopterEntity entity) {
         AddressEntity addressEntity = entity.getAddress();
         return new Adopter(
-                new UserId(entity.getUserId()),
+                new UserId(entity.getId()),
                 new ContactData(
                         new EmailAddress(entity.getEmail()),
                         new SwissPhoneNumber(entity.getPhoneNumber())),

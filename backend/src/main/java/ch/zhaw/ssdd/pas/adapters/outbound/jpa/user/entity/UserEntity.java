@@ -14,24 +14,24 @@ public abstract class UserEntity {
     @Id
     private UUID id;
 
-    @Column(unique = true)
-    private String userId;
-
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private AddressEntity address;
 
     @Column(length = 16)
     private String phoneNumber;
     
-    @Column(length = 50, unique = true)
+    @Column(unique = true)
     private String email;
+
+    protected UserEntity() {
+    }
+
+    public UserEntity(UUID id) {
+        this.id = id;
+    }
 
     public UUID getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public AddressEntity getAddress() {
@@ -56,13 +56,5 @@ public abstract class UserEntity {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 }

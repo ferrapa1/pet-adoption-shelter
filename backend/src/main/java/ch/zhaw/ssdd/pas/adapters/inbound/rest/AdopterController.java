@@ -38,7 +38,7 @@ public class AdopterController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<Adopter> findAdopterById(@PathVariable String userId) {
-        Adopter adopter = loadAdopterUseCase.load(new UserId(userId));
+        Adopter adopter = loadAdopterUseCase.load(UserId.of(userId));
         return ResponseEntity.ok(adopter);
     }
 }
