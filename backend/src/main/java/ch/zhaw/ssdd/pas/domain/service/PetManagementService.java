@@ -29,10 +29,8 @@ public class PetManagementService implements CreatePetUseCase, SearchPetUseCase 
 
     @Override
     public Pet createPet(CreatePetCommand command) {
-        // Generate a new unique ID for the pet
         PetId newPetId = new PetId(UUID.randomUUID().toString());
 
-        // Create the new Pet aggregate using the full constructor with empty lists
         Pet newPet = new Pet(
                 newPetId,
                 command.shelterId(),
@@ -40,13 +38,10 @@ public class PetManagementService implements CreatePetUseCase, SearchPetUseCase 
                 command.species(),
                 command.breed(),
                 command.name(),
-                Collections.emptyList(), // A new pet has no pictures yet
-                Collections.emptyList()  // A new pet has no comments yet
+                Collections.emptyList(),
+                Collections.emptyList()
         );
 
-        // Here you could add more business logic, like checking if the shelter is valid, etc.
-
-        // Persist the new aggregate using the outbound port
         return petPersistence.save(newPet);
     }
 

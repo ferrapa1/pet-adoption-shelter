@@ -23,14 +23,11 @@ public class PetCommentService implements AddCommentToPetUseCase {
 
     @Override
     public Pet addCommentToPet(PetId petId, Comment comment) {
-        // 1. Load the aggregate from the database
         Pet pet = petPersistence.findById(petId)
                 .orElseThrow(() -> new IllegalArgumentException("Pet with ID " + petId.value() + " not found."));
 
-        // 2. Call the aggregate's method to perform the business logic
         pet.addComment(comment);
 
-        // 3. Save the updated aggregate
         return petPersistence.save(pet);
     }
 }

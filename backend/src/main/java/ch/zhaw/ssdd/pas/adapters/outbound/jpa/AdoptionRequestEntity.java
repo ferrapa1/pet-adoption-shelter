@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "ADOPTION_REQUEST")
+@Table(name = "adoption_request")
 public class AdoptionRequestEntity {
 
     @Id
@@ -37,7 +37,6 @@ public class AdoptionRequestEntity {
         this.requestStatus = requestStatus;
     }
 
-    // Getters and Setters
     public UUID getId() {
         return id;
     }

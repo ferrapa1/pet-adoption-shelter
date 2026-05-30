@@ -19,12 +19,10 @@ public class Comment {
     private final LocalDateTime timestamp;
     private final String parentId; // Nullable. If null, it's a top-level comment.
 
-    // Constructor for a top-level comment
     public Comment(UserId authorId, String content) {
         this(authorId, content, null);
     }
 
-    // Constructor for a reply to an existing comment
     public Comment(UserId authorId, String content, String parentId) {
         this.authorId = Objects.requireNonNull(authorId, "AuthorId cannot be null.");
         this.content = Objects.requireNonNull(content, "Content cannot be null.");
@@ -32,7 +30,6 @@ public class Comment {
         this.parentId = parentId;
     }
 
-    // Constructor for reconstituting from persistence
     public Comment(UserId authorId, String content, LocalDateTime timestamp, String parentId) {
         this.authorId = authorId;
         this.content = content;

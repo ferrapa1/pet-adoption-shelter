@@ -27,7 +27,6 @@ public class CommentEntity {
     @JoinColumn(name = "pet_id")
     private PetEntity pet;
 
-    // JPA requires a no-arg constructor
     protected CommentEntity() {}
 
     public CommentEntity(UUID id, UUID authorId, String content, LocalDateTime timestamp, UUID parentId, PetEntity pet) {
@@ -39,7 +38,6 @@ public class CommentEntity {
         this.pet = pet;
     }
 
-    // Getters and Setters
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
     public UUID getAuthorId() { return authorId; }

@@ -26,37 +26,29 @@ public class PetPictureService implements AddPictureToPetUseCase, RemovePictureF
 
     @Override
     public Pet addPictureToPet(PetId petId, UserId shelterId, PetPhoto petPhoto) {
-        // 1. Load the aggregate
         Pet pet = petPersistence.findById(petId)
                 .orElseThrow(() -> new IllegalArgumentException("Pet with ID " + petId.value() + " not found."));
 
-        // 2. Enforce authorization: Only the owning shelter can add pictures
         if (!pet.getShelterId().equals(shelterId)) {
             throw new SecurityException("User is not authorized to add pictures to this pet.");
         }
 
-        // 3. Call the aggregate's method to perform the business logic
         pet.addPicture(petPhoto);
 
-        // 4. Save the updated aggregate
         return petPersistence.save(pet);
     }
 
     @Override
     public Pet removePictureFromPet(PetId petId, UserId shelterId, String pictureId) {
-        // 1. Load the aggregate
         Pet pet = petPersistence.findById(petId)
                 .orElseThrow(() -> new IllegalArgumentException("Pet with ID " + petId.value() + " not found."));
 
-        // 2. Enforce authorization: Only the owning shelter can remove pictures
         if (!pet.getShelterId().equals(shelterId)) {
             throw new SecurityException("User is not authorized to remove pictures from this pet.");
         }
 
-        // 3. Call the aggregate's method to perform the business logic
         pet.removePicture(pictureId);
 
-        // 4. Save the updated aggregate
         return petPersistence.save(pet);
     }
 }

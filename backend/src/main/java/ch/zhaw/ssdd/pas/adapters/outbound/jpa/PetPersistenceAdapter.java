@@ -1,5 +1,7 @@
 package ch.zhaw.ssdd.pas.adapters.outbound.jpa;
 
+import ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.entity.UserEntity;
+import ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.repository.UserEntityRepository;
 import ch.zhaw.ssdd.pas.domain.pet.Pet;
 import ch.zhaw.ssdd.pas.domain.pet.model.Comment;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetId;
@@ -25,9 +27,11 @@ import java.util.stream.Collectors;
 public class PetPersistenceAdapter implements PetPersistence {
 
     private final PetEntityRepository petEntityRepository;
+    private final UserEntityRepository userEntityRepository;
 
-    public PetPersistenceAdapter(PetEntityRepository petEntityRepository) {
+    public PetPersistenceAdapter(PetEntityRepository petEntityRepository, UserEntityRepository userEntityRepository) {
         this.petEntityRepository = petEntityRepository;
+        this.userEntityRepository = userEntityRepository;
     }
 
     @Override
@@ -55,26 +59,34 @@ public class PetPersistenceAdapter implements PetPersistence {
     private PetEntity toEntity(Pet domain) {
         PetEntity entity = new PetEntity();
         entity.setId(UUID.fromString(domain.getPetId().value()));
-        entity.setShelterId(UUID.fromString(domain.getShelterId().value()));
+        
+        UserEntity shelterEntity = userEntityRepository.findByUserId(domain.getShelterId().value())
+                .orElseThrow(() -> new IllegalStateException("Cannot save Pet: Shelter user not found with ID " + domain.getShelterId().value()));
+        entity.setShelterId(shelterEntity.getId());
+        
         entity.setName(domain.getName());
         entity.setDateOfBirth(domain.getDateOfBirth());
         entity.setBreed(domain.getBreed());
         entity.setAdoptionStatus(domain.getAdoptionStatus());
+        entity.setSpecies(domain.getSpecies());
 
-        // Map Comments
         List<CommentEntity> commentEntities = domain.getComments().stream()
-                .map(comment -> new CommentEntity(
+                .map(comment -> {
+                    UserEntity authorEntity = userEntityRepository.findByUserId(comment.getAuthorId().value())
+                            .orElseThrow(() -> new IllegalStateException("Cannot save Comment: Author user not found with ID " + comment.getAuthorId().value()));
+                            
+                    return new CommentEntity(
                         UUID.randomUUID(), // No ID because it's a ValueObject, generate one for the DB
-                        UUID.fromString(comment.getAuthorId().value()),
+                        authorEntity.getId(),
                         comment.getContent(),
                         comment.getTimestamp(),
                         comment.getParentId() != null ? UUID.fromString(comment.getParentId()) : null,
                         entity // Link back to parent
-                ))
+                    );
+                })
                 .collect(Collectors.toList());
         entity.setComments(commentEntities);
 
-        // Map Pictures
         List<PictureEntity> pictureEntities = domain.getPetPhotos().stream()
                 .map(picture -> new PictureEntity(
                         UUID.randomUUID(), // No ID because it's a ValueObject, generate one for the DB
@@ -89,17 +101,20 @@ public class PetPersistenceAdapter implements PetPersistence {
 
     private Pet toDomain(PetEntity entity) {
         
-        // Convert JPA Comments to Domain Comments
         List<Comment> domainComments = entity.getComments().stream()
-                .map(c -> new Comment(
-                        new UserId(c.getAuthorId().toString()),
+                .map(c -> {
+                    UserEntity authorEntity = userEntityRepository.findById(c.getAuthorId())
+                            .orElseThrow(() -> new IllegalStateException("Data integrity error: Comment author UUID not found " + c.getAuthorId()));
+                    
+                    return new Comment(
+                        new UserId(authorEntity.getUserId()),
                         c.getContent(),
                         c.getTimestamp(),
                         c.getParentId() != null ? c.getParentId().toString() : null
-                ))
+                    );
+                })
                 .collect(Collectors.toList());
 
-        // Convert JPA Pictures to Domain PetPhotos
         List<PetPhoto> domainPhotos = entity.getPictures().stream()
                 .map(p -> new PetPhoto(
                         new LocalFilePath(p.getUrl()),
@@ -109,10 +124,12 @@ public class PetPersistenceAdapter implements PetPersistence {
                 ))
                 .collect(Collectors.toList());
 
-        // Reconstitute the core Pet aggregate using the full constructor
+        UserEntity shelterEntity = userEntityRepository.findById(entity.getShelterId())
+                 .orElseThrow(() -> new IllegalStateException("Data integrity error: Shelter UUID not found " + entity.getShelterId()));
+
         Pet pet = new Pet(
                 new PetId(entity.getId().toString()),
-                new UserId(entity.getShelterId().toString()),
+                new UserId(shelterEntity.getUserId()),
                 entity.getDateOfBirth(),
                 entity.getSpecies(),
                 entity.getBreed(),
