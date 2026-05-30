@@ -14,8 +14,8 @@ CREATE TABLE app_user (
     address_id UUID,
     phone_number VARCHAR(16),
     email VARCHAR(255) UNIQUE,
-    has_garden BOOLEAN,
-    has_children BOOLEAN,
+    has_garden BOOLEAN DEFAULT FALSE,
+    has_children BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (address_id) REFERENCES address(id)
 );
 
@@ -37,6 +37,16 @@ CREATE TABLE pet_picture (
     FOREIGN KEY (pet_id) REFERENCES pet(id)
 );
 
+CREATE TABLE adoption_request (
+  id UUID PRIMARY KEY,
+  adopter_id UUID NOT NULL,
+  pet_id UUID NOT NULL,
+  created_at TIMESTAMP NOT NULL,
+  request_status VARCHAR(255) NOT NULL,
+  FOREIGN KEY (adopter_id) REFERENCES app_user(id),
+  FOREIGN KEY (pet_id) REFERENCES pet(id)
+);
+
 CREATE TABLE comment (
     id UUID PRIMARY KEY,
     author_id UUID NOT NULL,
@@ -49,14 +59,4 @@ CREATE TABLE comment (
     FOREIGN KEY (adoption_id) REFERENCES adoption_request(id),
     FOREIGN KEY (author_id) REFERENCES app_user(id),
     FOREIGN KEY (parent_id) REFERENCES comment(id)
-);
-
-CREATE TABLE adoption_request (
-    id UUID PRIMARY KEY,
-    adopter_id UUID NOT NULL,
-    pet_id UUID NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    request_status VARCHAR(255) NOT NULL,
-    FOREIGN KEY (adopter_id) REFERENCES app_user(id),
-    FOREIGN KEY (pet_id) REFERENCES pet(id)
 );
