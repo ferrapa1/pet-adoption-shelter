@@ -36,8 +36,7 @@ public class PetPersistenceAdapter implements PetPersistence {
 
     @Override
     public Optional<Pet> findById(PetId id) {
-        UUID uuid = UUID.fromString(id.value());
-        return petEntityRepository.findById(uuid)
+        return petEntityRepository.findById(id.value())
                 .map(this::toDomain);
     }
 
@@ -57,9 +56,8 @@ public class PetPersistenceAdapter implements PetPersistence {
     }
 
     private PetEntity toEntity(Pet domain) {
-        PetEntity entity = new PetEntity();
-        entity.setId(UUID.fromString(domain.getPetId().value()));
-        
+        PetEntity entity = new PetEntity(domain.getPetId().value());
+
         UserEntity shelterEntity = userEntityRepository.findById(domain.getShelterId().value())
                 .orElseThrow(() -> new IllegalStateException("Cannot save Pet: Shelter user not found with ID " + domain.getShelterId().value()));
         entity.setShelterId(shelterEntity.getId());
@@ -120,7 +118,7 @@ public class PetPersistenceAdapter implements PetPersistence {
                 .map(p -> new PetPhoto(
                         new LocalFilePath(p.getUrl()),
                         new UploadTimestamp(LocalDateTime.now()), // Or store upload time in PictureEntity
-                        new PetId(entity.getId().toString())
+                        new PetId(entity.getId())
 
                 ))
                 .collect(Collectors.toList());
@@ -129,7 +127,7 @@ public class PetPersistenceAdapter implements PetPersistence {
                  .orElseThrow(() -> new IllegalStateException("Data integrity error: Shelter UUID not found " + entity.getShelterId()));
 
         Pet pet = new Pet(
-                new PetId(entity.getId().toString()),
+                new PetId(entity.getId()),
                 new UserId(shelterEntity.getId()),
                 entity.getDateOfBirth(),
                 entity.getSpecies(),

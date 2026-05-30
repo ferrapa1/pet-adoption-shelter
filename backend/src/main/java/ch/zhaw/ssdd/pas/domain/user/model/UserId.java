@@ -3,15 +3,14 @@ package ch.zhaw.ssdd.pas.domain.user.model;
 import ch.zhaw.ssdd.pas.stereotypes.EntityId;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @EntityId
 public record UserId(UUID value) {
 
     public UserId {
-        if (ObjectUtils.isEmpty(value)) {
-            throw new IllegalArgumentException("UserId cannot be empty.");
-        }
+        Objects.requireNonNull(value, "UserId cannot be null.");
     }
 
     public static UserId of(String userIdStr) {

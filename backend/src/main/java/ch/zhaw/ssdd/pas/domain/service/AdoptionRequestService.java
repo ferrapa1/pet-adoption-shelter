@@ -28,13 +28,13 @@ public class AdoptionRequestService implements SubmitAdoptionRequestUseCase {
     public AdoptionRequest submitAdoptionRequest(SubmitAdoptionRequestCommand command) {
         PetId petId = command.petId();
         Pet pet = petPersistence.findById(petId)
-                .orElseThrow(() -> new IllegalArgumentException("Pet with ID " + petId.value() + " not found."));
+                .orElseThrow(() -> new IllegalArgumentException("Pet with ID " + petId + " not found."));
 
         if (pet.getAdoptionStatus() != PetAdoptionStatus.AVAILABLE) {
             throw new IllegalStateException("Pet is not available for adoption.");
         }
 
-        AdoptionRequestId newId = new AdoptionRequestId(UUID.randomUUID().toString());
+        AdoptionRequestId newId = new AdoptionRequestId(UUID.randomUUID());
         AdoptionRequest newRequest = new AdoptionRequest(newId, command.adopterId(), petId);
 
         return adoptionRequestPersistence.save(newRequest);

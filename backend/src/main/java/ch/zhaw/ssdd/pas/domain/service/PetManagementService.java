@@ -29,7 +29,7 @@ public class PetManagementService implements CreatePetUseCase, SearchPetUseCase 
 
     @Override
     public Pet createPet(CreatePetCommand command) {
-        PetId newPetId = new PetId(UUID.randomUUID().toString());
+        PetId newPetId = new PetId(UUID.randomUUID());
 
         Pet newPet = new Pet(
                 newPetId,

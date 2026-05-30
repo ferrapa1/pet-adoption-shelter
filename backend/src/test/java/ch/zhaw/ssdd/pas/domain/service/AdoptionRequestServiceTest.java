@@ -43,7 +43,7 @@ class AdoptionRequestServiceTest {
 
     @Test
     void testSubmitAdoptionRequest_Success() {
-        PetId petId = new PetId(UUID.randomUUID().toString());
+        PetId petId = new PetId(UUID.randomUUID());
         UserId adopterId = new UserId(UUID.randomUUID());
         SubmitAdoptionRequestCommand command = new SubmitAdoptionRequestCommand(adopterId, petId);
 
@@ -72,7 +72,7 @@ class AdoptionRequestServiceTest {
 
     @Test
     void testSubmitAdoptionRequest_PetNotAvailable() {
-        PetId petId = new PetId(UUID.randomUUID().toString());
+        PetId petId = new PetId(UUID.randomUUID());
         UserId adopterId = new UserId(UUID.randomUUID());
         SubmitAdoptionRequestCommand command = new SubmitAdoptionRequestCommand(adopterId, petId);
 
@@ -92,8 +92,7 @@ class AdoptionRequestServiceTest {
     
     @Test
     void testSubmitAdoptionRequest_PetNotFound() {
-        String petUuid = UUID.randomUUID().toString();
-        PetId petId = new PetId(petUuid);
+        PetId petId = new PetId(UUID.randomUUID());
         UserId adopterId = new UserId(UUID.randomUUID());
         SubmitAdoptionRequestCommand command = new SubmitAdoptionRequestCommand(adopterId, petId);
 
@@ -103,7 +102,7 @@ class AdoptionRequestServiceTest {
             service.submitAdoptionRequest(command);
         });
 
-        assertEquals("Pet with ID " + petUuid + " not found.", exception.getMessage());
+        assertEquals("Pet with ID " + petId + " not found.", exception.getMessage());
         Mockito.verify(petPersistence).findById(petId);
         Mockito.verify(adoptionRequestPersistence, Mockito.never()).save(any());
     }

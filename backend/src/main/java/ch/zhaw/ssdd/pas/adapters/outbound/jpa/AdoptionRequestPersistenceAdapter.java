@@ -27,9 +27,9 @@ public class AdoptionRequestPersistenceAdapter implements AdoptionRequestPersist
 
     private AdoptionRequestEntity toEntity(AdoptionRequest domain) {
         return new AdoptionRequestEntity(
-                UUID.fromString(domain.getAdoptionRequestId().value()),
+                domain.getAdoptionRequestId().value(),
                 domain.getAdopterId().value(),
-                UUID.fromString(domain.getPetId().value()),
+                domain.getPetId().value(),
                 domain.getCreatedAt(),
                 domain.getRequestStatus()
         );
@@ -37,9 +37,9 @@ public class AdoptionRequestPersistenceAdapter implements AdoptionRequestPersist
 
     private AdoptionRequest toDomain(AdoptionRequestEntity entity) {
         return new AdoptionRequest(
-                new AdoptionRequestId(entity.getId().toString()),
+                new AdoptionRequestId(entity.getId()),
                 new UserId(entity.getAdopterId()),
-                new PetId(entity.getPetId().toString())
+                new PetId(entity.getPetId())
         );
     }
 }

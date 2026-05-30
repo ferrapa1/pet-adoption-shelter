@@ -18,7 +18,7 @@ class UserIdTest {
 
     @Test
     void testNull() {
-        assertThrows(IllegalArgumentException.class,() -> new UserId(null));
+        assertThrows(NullPointerException.class,() -> new UserId(null));
     }
 
 }

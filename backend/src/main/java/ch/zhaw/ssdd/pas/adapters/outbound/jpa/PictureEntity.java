@@ -26,7 +26,6 @@ public class PictureEntity {
     }
 
     public UUID getId() { return id; }
-    public void setId(UUID id) { this.id = id; }
     public String getUrl() { return url; }
     public void setUrl(String url) { this.url = url; }
     public PetEntity getPet() { return pet; }

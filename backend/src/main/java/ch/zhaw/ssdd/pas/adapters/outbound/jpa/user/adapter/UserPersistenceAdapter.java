@@ -9,8 +9,7 @@ import java.util.UUID;
 public class UserPersistenceAdapter implements UserPersistence {
 
     protected static AddressEntity mapAddressFromDomain(Address address) {
-        AddressEntity addressEntity = new AddressEntity();
-        addressEntity.setId(UUID.randomUUID());
+        AddressEntity addressEntity = new AddressEntity(UUID.randomUUID());
         addressEntity.setStreet(address.street());
         addressEntity.setCity(address.city());
         addressEntity.setPlz(address.plz().value());

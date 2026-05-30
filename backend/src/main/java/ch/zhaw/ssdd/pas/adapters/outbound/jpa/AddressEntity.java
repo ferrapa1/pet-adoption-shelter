@@ -23,12 +23,16 @@ public class AddressEntity {
     @Column(nullable = false)
     private String city;
 
-    public UUID getId() {
-        return id;
+    protected AddressEntity() {
+
     }
 
-    public void setId(UUID id) {
+    public AddressEntity(UUID id) {
         this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getStreet() {

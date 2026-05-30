@@ -44,10 +44,13 @@ public class PetEntity {
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PictureEntity> pictures = new ArrayList<>();
 
-    public PetEntity() {}
+    protected PetEntity() {}
+
+    public PetEntity(UUID id) {
+        this.id = id;
+    }
 
     public UUID getId() { return id; }
-    public void setId(UUID id) { this.id = id; }
     public UUID getShelterId() { return shelterId; }
     public void setShelterId(UUID shelterId) { this.shelterId = shelterId; }
     public String getName() { return name; }

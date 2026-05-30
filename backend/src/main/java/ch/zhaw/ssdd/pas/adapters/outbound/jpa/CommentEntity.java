@@ -44,7 +44,6 @@ public class CommentEntity {
     }
 
     public UUID getId() { return id; }
-    public void setId(UUID id) { this.id = id; }
     public UUID getAuthorId() { return authorId; }
     public void setAuthorId(UUID authorId) { this.authorId = authorId; }
     public String getContent() { return content; }
