@@ -7,6 +7,8 @@ import ch.zhaw.ssdd.pas.adapters.outbound.jpa.user.repository.UserEntityReposito
 import ch.zhaw.ssdd.pas.domain.pet.model.Breed;
 import ch.zhaw.ssdd.pas.domain.pet.model.Species;
 import ch.zhaw.ssdd.pas.domain.service.PetManagementService;
+import ch.zhaw.ssdd.pas.domain.service.PetPictureService;
+import ch.zhaw.ssdd.pas.ports.outbound.FileStoragePort;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = {
         PetController.class,
         PetManagementService.class,
-        PetPersistenceAdapter.class
+        PetPersistenceAdapter.class,
+        PetPictureService.class
 })
 class PetRestControllerTest {
 
@@ -56,6 +59,9 @@ class PetRestControllerTest {
 
     @MockitoBean
     private PictureEntityRepository pictureEntityRepository;
+    
+    @MockitoBean
+    private FileStoragePort fileStoragePort;
 
     @Test
     void testSimpleSearch() throws Exception {
@@ -66,14 +72,18 @@ class PetRestControllerTest {
         petEntity.setDateOfBirth(LocalDate.now());
         petEntity.setSpecies(new Species("Dog"));
         petEntity.setBreed(new Breed("Husky"));
+        petEntity.setDescription("descr");
         petEntity.setAdoptionStatus(AVAILABLE);
         petEntity.setShelterId(shelterEntity.getId());
 
         PetDTO expectedPet = new PetDTO(
+                petEntity.getId().toString(),
                 "Mock",
                 "Dog",
                 "Husky",
-                AVAILABLE
+                "descr",
+                AVAILABLE,
+                List.of()
         );
 
         Mockito.when(userEntityRepository.findById(any())).thenReturn(Optional.of(shelterEntity));

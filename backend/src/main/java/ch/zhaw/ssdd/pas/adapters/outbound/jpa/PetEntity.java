@@ -23,6 +23,9 @@ public class PetEntity {
     @Column(nullable = false)
     private String name;
 
+    @Column(length = 4000)
+    private String description;
+
     @Column(nullable = false)
     private LocalDate dateOfBirth;
 
@@ -48,13 +51,18 @@ public class PetEntity {
 
     public PetEntity(UUID id) {
         this.id = id;
+        this.comments = new ArrayList<>();
+        this.pictures = new ArrayList<>();
     }
 
     public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
     public UUID getShelterId() { return shelterId; }
     public void setShelterId(UUID shelterId) { this.shelterId = shelterId; }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
     public LocalDate getDateOfBirth() { return dateOfBirth; }
     public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
     public Species getSpecies() { return species; }

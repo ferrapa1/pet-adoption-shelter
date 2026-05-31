@@ -3,7 +3,7 @@ package ch.zhaw.ssdd.pas.domain.service;
 import ch.zhaw.ssdd.pas.domain.user.model.SwissPhoneNumber;
 import ch.zhaw.ssdd.pas.domain.user.Adopter;
 import ch.zhaw.ssdd.pas.domain.user.model.*;
-import ch.zhaw.ssdd.pas.ports.inbound.RegisterAdopterCommand;
+import ch.zhaw.ssdd.pas.ports.inbound.dto.RegisterAdopterCommand;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

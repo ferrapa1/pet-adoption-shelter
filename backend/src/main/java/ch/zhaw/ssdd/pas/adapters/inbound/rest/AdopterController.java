@@ -3,7 +3,7 @@ package ch.zhaw.ssdd.pas.adapters.inbound.rest;
 import ch.zhaw.ssdd.pas.domain.user.Adopter;
 import ch.zhaw.ssdd.pas.domain.user.model.UserId;
 import ch.zhaw.ssdd.pas.ports.inbound.LoadAdopterUseCase;
-import ch.zhaw.ssdd.pas.ports.inbound.RegisterAdopterCommand;
+import ch.zhaw.ssdd.pas.ports.inbound.dto.RegisterAdopterCommand;
 import ch.zhaw.ssdd.pas.ports.inbound.RegisterAdopterUseCase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ public class AdopterController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> registerAdopter(@RequestBody RegisterAdopterCommand command) {
+    public ResponseEntity<UserId> registerAdopter(@RequestBody RegisterAdopterCommand command) {
         UserId newUserId = registerAdopterUseCase.registerAdopter(command);
 
         URI location = ServletUriComponentsBuilder
@@ -33,7 +33,7 @@ public class AdopterController {
                 .buildAndExpand(newUserId.value())
                 .toUri();
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(newUserId);
     }
 
     @GetMapping("/{userId}")

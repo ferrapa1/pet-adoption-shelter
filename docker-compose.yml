@@ -28,6 +28,8 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8080:8080"
+    volumes:
+      - ./local-storage:/storage
 
 #  frontend:
 #    build:

@@ -26,8 +26,11 @@ spring:
     enabled: true
     locations: classpath:db/migration,classpath:db/data
 
+app:
+  storage:
+    path: ./target/uploads
+
 logging:
   level:
     web: TRACE
     org.springframework.web: TRACE
-
