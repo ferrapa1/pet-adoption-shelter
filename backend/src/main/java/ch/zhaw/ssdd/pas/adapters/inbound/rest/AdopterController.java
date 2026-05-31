@@ -1,5 +1,6 @@
 package ch.zhaw.ssdd.pas.adapters.inbound.rest;
 
+import ch.zhaw.ssdd.pas.adapters.inbound.rest.dto.AdopterDTO;
 import ch.zhaw.ssdd.pas.domain.user.Adopter;
 import ch.zhaw.ssdd.pas.domain.user.model.UserId;
 import ch.zhaw.ssdd.pas.ports.inbound.LoadAdopterUseCase;
@@ -37,8 +38,9 @@ public class AdopterController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Adopter> findAdopterById(@PathVariable String userId) {
+    public ResponseEntity<AdopterDTO> findAdopterById(@PathVariable String userId) {
         Adopter adopter = loadAdopterUseCase.load(UserId.of(userId));
-        return ResponseEntity.ok(adopter);
+        AdopterDTO dto = AdopterDTO.of(adopter);
+        return ResponseEntity.ok(dto);
     }
 }
