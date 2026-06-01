@@ -1,4 +1,4 @@
-package ch.zhaw.ssdd.pas.ports.inbound;
+package ch.zhaw.ssdd.pas.ports.inbound.dto;
 
 import ch.zhaw.ssdd.pas.domain.pet.model.Breed;
 import ch.zhaw.ssdd.pas.domain.pet.model.Species;
@@ -13,6 +13,7 @@ import java.util.Objects;
 public record CreatePetCommand(
         UserId shelterId,
         String name,
+        String description,
         LocalDate dateOfBirth,
         Species species,
         Breed breed

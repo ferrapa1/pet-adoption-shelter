@@ -5,7 +5,7 @@ import ch.zhaw.ssdd.pas.domain.adoption.model.AdoptionRequestId;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetAdoptionStatus;
 import ch.zhaw.ssdd.pas.domain.pet.Pet;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetId;
-import ch.zhaw.ssdd.pas.ports.inbound.SubmitAdoptionRequestCommand;
+import ch.zhaw.ssdd.pas.ports.inbound.dto.SubmitAdoptionRequestCommand;
 import ch.zhaw.ssdd.pas.ports.inbound.SubmitAdoptionRequestUseCase;
 import ch.zhaw.ssdd.pas.ports.outbound.AdoptionRequestPersistence;
 import ch.zhaw.ssdd.pas.ports.outbound.PetPersistence;

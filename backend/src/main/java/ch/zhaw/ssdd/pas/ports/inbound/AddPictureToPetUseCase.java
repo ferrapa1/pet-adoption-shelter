@@ -3,8 +3,9 @@ package ch.zhaw.ssdd.pas.ports.inbound;
 
 import ch.zhaw.ssdd.pas.domain.pet.Pet;
 import ch.zhaw.ssdd.pas.domain.pet.model.PetId;
-import ch.zhaw.ssdd.pas.domain.pet.model.PetPhoto;
 import ch.zhaw.ssdd.pas.domain.user.model.UserId;
+
+import java.io.IOException;
 
 /**
  * Defines the contract for adding a picture to a pet's profile.
@@ -13,12 +14,14 @@ import ch.zhaw.ssdd.pas.domain.user.model.UserId;
 public interface AddPictureToPetUseCase {
 
     /**
-     * Adds a picture to the specified pet.
+     * Saves a picture file and associates it with the specified pet.
      *
      * @param petId The ID of the pet.
      * @param shelterId The ID of the shelter adding the picture (for authorization).
-     * @param petPhoto The PetPhoto value object to add.
+     * @param fileData The raw byte data of the picture file.
+     * @param originalFilename The original name of the file.
      * @return The updated Pet aggregate.
+     * @throws IOException If there is an error saving the file.
      */
-    Pet addPictureToPet(PetId petId, UserId shelterId, PetPhoto petPhoto);
+    Pet addPictureToPet(PetId petId, UserId shelterId, byte[] fileData, String originalFilename) throws IOException;
 }

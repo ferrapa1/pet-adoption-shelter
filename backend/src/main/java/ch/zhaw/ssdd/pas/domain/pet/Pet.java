@@ -19,8 +19,9 @@ public class Pet {
     private final Species species;
     private final Breed breed;
     private final String name;
-    private List<PetPhoto> petPhotos; // Changed to mutable list
-    private List<Comment> comments; // Changed to mutable list
+    private final String description;
+    private List<PetPhoto> petPhotos;
+    private List<Comment> comments;
     private PetAdoptionStatus adoptionStatus;
 
     public Pet(PetId petId,
@@ -29,6 +30,7 @@ public class Pet {
                Species species,
                Breed breed,
                String name,
+               String description,
                List<PetPhoto> petPhotos,
                List<Comment> comments) {
         this.petId = petId;
@@ -37,6 +39,7 @@ public class Pet {
         this.species = species;
         this.breed = breed;
         this.name = name;
+        this.description = description;
         this.petPhotos = new ArrayList<>(petPhotos); // Use mutable list
         this.comments = new ArrayList<>(comments); // Use mutable list
         this.adoptionStatus = PetAdoptionStatus.AVAILABLE;
@@ -85,6 +88,10 @@ public class Pet {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public PetAdoptionStatus getAdoptionStatus() {

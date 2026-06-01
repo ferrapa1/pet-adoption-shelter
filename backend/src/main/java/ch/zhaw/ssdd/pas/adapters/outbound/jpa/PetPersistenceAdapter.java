@@ -133,6 +133,7 @@ public class PetPersistenceAdapter implements PetPersistence {
                 entity.getSpecies(),
                 entity.getBreed(),
                 entity.getName(),
+                entity.getDescription(),
                 domainPhotos,
                 domainComments
         );

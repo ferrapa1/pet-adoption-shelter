@@ -4,7 +4,7 @@ import ch.zhaw.ssdd.pas.domain.user.Adopter;
 import ch.zhaw.ssdd.pas.domain.user.model.EmailAddress;
 import ch.zhaw.ssdd.pas.domain.user.model.UserId;
 import ch.zhaw.ssdd.pas.ports.inbound.LoadAdopterUseCase;
-import ch.zhaw.ssdd.pas.ports.inbound.RegisterAdopterCommand;
+import ch.zhaw.ssdd.pas.ports.inbound.dto.RegisterAdopterCommand;
 import ch.zhaw.ssdd.pas.ports.inbound.RegisterAdopterUseCase;
 import ch.zhaw.ssdd.pas.ports.outbound.AdopterPersistence;
 import org.springframework.stereotype.Service;

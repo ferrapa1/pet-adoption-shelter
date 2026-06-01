@@ -1,4 +1,4 @@
-package ch.zhaw.ssdd.pas.ports.inbound;
+package ch.zhaw.ssdd.pas.ports.inbound.dto;
 
 import ch.zhaw.ssdd.pas.domain.user.model.Address;
 import ch.zhaw.ssdd.pas.domain.user.model.ContactData;

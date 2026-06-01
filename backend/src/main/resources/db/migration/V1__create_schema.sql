@@ -23,6 +23,7 @@ CREATE TABLE pet (
     id UUID PRIMARY KEY,
     shelter_id UUID NOT NULL,
     name VARCHAR(255) NOT NULL,
+    description VARCHAR(4000),
     date_of_birth DATE NOT NULL,
     species VARCHAR(255),
     breed_name VARCHAR(255),

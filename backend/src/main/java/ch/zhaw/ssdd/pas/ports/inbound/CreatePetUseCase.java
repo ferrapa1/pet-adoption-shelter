@@ -3,6 +3,7 @@ package ch.zhaw.ssdd.pas.ports.inbound;
 
 
 import ch.zhaw.ssdd.pas.domain.pet.Pet;
+import ch.zhaw.ssdd.pas.ports.inbound.dto.CreatePetCommand;
 
 /**
  * Defines the contract for creating a new Pet.
