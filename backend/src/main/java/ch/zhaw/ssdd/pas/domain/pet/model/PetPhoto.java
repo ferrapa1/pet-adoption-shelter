@@ -10,6 +10,7 @@ import java.util.Objects;
 @ValueObject
 public record PetPhoto(LocalFilePath localFilePath, UploadTimestamp uploadTimestamp, PetId petId) {
 
+    //TODO add hash
     public PetPhoto {
         Objects.requireNonNull(localFilePath);
         Objects.requireNonNull(uploadTimestamp);

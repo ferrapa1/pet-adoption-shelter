@@ -41,6 +41,7 @@ public class LocalFileStorageAdapter implements FileStoragePort {
         return StaticResourceConfiguration.IMAGES_URL_PATH + "/" + uniqueFilename;
     }
 
+    // TODO check magic bytes
     private String getExtension(String filename) {
         if (filename == null || filename.lastIndexOf(".") == -1) {
             return "";
