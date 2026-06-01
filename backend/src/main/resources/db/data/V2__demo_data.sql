@@ -1,0 +1,36 @@
+INSERT INTO ADDRESS(ID, STREET, HOUSE_NUMBER, PLZ, CITY)
+VALUES('40000000-0000-0000-0000-000000000001', 'Bahnhofstrasse', '1A', 8001, 'Zürich');
+
+-- Shelter
+INSERT INTO APP_USER (ID, USER_TYPE, ADDRESS_ID, PHONE_NUMBER, EMAIL, HAS_GARDEN, HAS_CHILDREN)
+VALUES ('10000000-0000-0000-0000-000000000001', 'SHELTER', '40000000-0000-0000-0000-000000000001', '+41 76 123 45 67', 'shelter_1@mail.com', FALSE, FALSE);
+
+-- Adopter
+INSERT INTO APP_USER (ID, USER_TYPE, ADDRESS_ID, PHONE_NUMBER, EMAIL, HAS_GARDEN, HAS_CHILDREN)
+VALUES ('20000000-0000-0000-0000-000000000001', 'ADOPTER', '40000000-0000-0000-0000-000000000001', '+41 76 123 45 67', 'adopter_1@mail.com', TRUE, TRUE);
+
+--  PET 1: Fido (Golden Retriever)
+INSERT INTO PET (id, shelter_id, name, date_of_birth, species, breed_name, adoption_status, description)
+VALUES ('00000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000001', 'Fido', '2021-03-15', 'Dog', 'Golden Retriever', 'AVAILABLE', 'Very hungry, it will cost you a fortune!');
+
+-- Pictures for Fido
+INSERT INTO PET_PICTURE (id, url, pet_id)
+VALUES ('20000000-0000-0000-0000-000000000001', '/images/fido1.jpg', '00000000-0000-0000-0000-000000000001'),
+       ('20000000-0000-0000-0000-000000000002', '/images/fido2.jpg', '00000000-0000-0000-0000-000000000001');
+
+-- Comments for Fido
+INSERT INTO COMMENT (id, author_id, content, timestamp, pet_id, parent_id)
+VALUES ('30000000-0000-0000-0000-000000000001', '20000000-0000-0000-0000-000000000001', 'How is he with children?', '2024-05-26 10:00:00', '00000000-0000-0000-0000-000000000001', NULL);
+
+-- Reply to the above comment
+INSERT INTO COMMENT (id, author_id, content, timestamp, pet_id, parent_id)
+VALUES ('30000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000001', 'He is great with kids! Very gentle.', '2024-05-26 11:30:00', '00000000-0000-0000-0000-000000000001', '30000000-0000-0000-0000-000000000001');
+
+
+--  PET 2: Whiskers (Siamese)
+INSERT INTO PET (id, shelter_id, name, date_of_birth, species, breed_name, adoption_status, description)
+VALUES ('00000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000001', 'Whiskers', '2022-08-01', 'Cat', 'Siamese', 'AVAILABLE', 'It''s a beast! Watch out!');
+
+-- Pictures for Whiskers
+INSERT INTO PET_PICTURE (id, url, pet_id)
+VALUES ('20000000-0000-0000-0000-000000000003', '/images/whiskers1.jpg', '00000000-0000-0000-0000-000000000002');

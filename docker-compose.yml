@@ -28,16 +28,18 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8080:8080"
+    volumes:
+      - ./local-storage:/storage
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    image: pas-frontend:latest
-    container_name: pas-frontend
-    depends_on:
-      - backend
-    ports:
-      - "80:80"
-    environment:
-      - NGINX_PROXY_PASS=http://backend:8080
+#  frontend:
+#    build:
+#      context: ./frontend
+#      dockerfile: Dockerfile
+#    image: pas-frontend:latest
+#    container_name: pas-frontend
+#    depends_on:
+#      - backend
+#    ports:
+#      - "80:80"
+#    environment:
+#      - NGINX_PROXY_PASS=http://backend:8080

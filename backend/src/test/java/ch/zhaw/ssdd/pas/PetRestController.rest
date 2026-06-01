@@ -1,0 +1,10 @@
+GET http://{{host}}:{{port}}/api/pets
+Accept: application/json
+
+> {%
+    client.test("Status is 200", () => {
+        client.assert(response.status === 200, "Unexpected status code");
+    });
+
+%}
+###

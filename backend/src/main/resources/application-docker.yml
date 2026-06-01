@@ -16,4 +16,8 @@ spring:
 
   flyway:
     enabled: true
-    locations: classpath:db/migration,classpath:db/docker
+    locations: classpath:db/migration,classpath:db/data
+
+app:
+  storage:
+    path: /storage
